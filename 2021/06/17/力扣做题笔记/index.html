@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.6k 字
+      2.8k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      36
+      40
        分钟
     </span>
   
@@ -416,6 +416,24 @@
 <p>思路：BFS(广度优先搜索) </p>
 <p>代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Double&gt; <span class="hljs-title">averageOfLevels</span><span class="hljs-params">(TreeNode root)</span></span>&#123;<br>    List&lt;Double&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    <span class="hljs-keyword">if</span>(root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> list;<br>    Queue&lt;TreeNode&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();<br>    queue.add(root);<br>    <span class="hljs-keyword">while</span>(!queue.isEmpty())&#123;<br>        <span class="hljs-keyword">int</span> n = queue.size();<br>        <span class="hljs-keyword">double</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            TreeNode temp = queue.poll();<br>            sum = sum + temp.val;<br>            <span class="hljs-keyword">if</span>(temp.left!=<span class="hljs-keyword">null</span>) queue.add(temp.left);<br>            <span class="hljs-keyword">if</span>(temp.right!=<span class="hljs-keyword">null</span>) queue.add(temp.right);<br>        &#125;<br>        list.add(sum/n);<br>    &#125;<br>    <span class="hljs-keyword">return</span> list;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="得到左下角的节点"><a href="#得到左下角的节点" class="headerlink" title="得到左下角的节点"></a>得到左下角的节点</h4><p>题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-bottom-left-tree-value/">找树左下角的值</a></p>
+<p>给定一个二叉树，在树的最后一行找到最左边的值。</p>
+<p>思路：BFS</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findBottomLeftValue</span><span class="hljs-params">(TreeNode root)</span></span>&#123;<br>	Queue&lt;TreeNode&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();<br>    queue.add(root);<br>    <span class="hljs-keyword">while</span>(!queue.isEmpty())&#123;<br>        root = queue.poll();<br>        <span class="hljs-keyword">if</span>(root.right!=<span class="hljs-keyword">null</span>) queue.add(root.right);<br>        <span class="hljs-keyword">if</span>(root.left!=<span class="hljs-keyword">null</span>) queue.add(root.left);<br>    &#125;<br>    <span class="hljs-keyword">return</span> root.val;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="前中后序遍历"><a href="#前中后序遍历" class="headerlink" title="前中后序遍历"></a>前中后序遍历</h3><h4 id="二叉树的前序遍历"><a href="#二叉树的前序遍历" class="headerlink" title="二叉树的前序遍历"></a>二叉树的前序遍历</h4><p>题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/">二叉树的前序遍历</a></p>
+<p>给你二叉树的根节点 <code>root</code> ，返回它节点值的 <strong>前序</strong> 遍历。</p>
+<p>思路：递归 ，迭代</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//递归</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode root)</span></span>&#123;<br>    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    preorder(res,root);<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">preorder</span><span class="hljs-params">(List&lt;Integer&gt; res,TreeNode root)</span></span>&#123;<br>    <span class="hljs-keyword">if</span>(root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;<br>    res.add(root.val);<br>    preorder(res,root.left);<br>    preorder(res,root.right);<br>&#125;<br><br><br><span class="hljs-comment">//迭代</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode root)</span></span>&#123;<br>    Deque&lt;TreeNode&gt; stack = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();<br>    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    stack.push(root);<br>    <span class="hljs-keyword">while</span>(!stack.isEmpty())&#123;<br>        TreeNode temp = stack.pop();<br>        <span class="hljs-keyword">if</span>(temp==<span class="hljs-keyword">null</span>) <span class="hljs-keyword">continue</span>;<br>        res.add(temp.val);<br>        <span class="hljs-keyword">if</span>(temp.right!=<span class="hljs-keyword">null</span>) stack.push(temp.right);<br>        <span class="hljs-keyword">if</span>(temp.left!=<span class="hljs-keyword">null</span>) stack.push(temp.left);<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
 
 
             </div>
