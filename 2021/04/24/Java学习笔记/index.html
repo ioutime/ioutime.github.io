@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      1.8k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      19
        分钟
     </span>
   
@@ -239,7 +239,7 @@
 </li>
 <li><p>安全性</p>
 </li>
-<li><p>可移植性(javad的虚拟机)</p>
+<li><p>可移植性(java的虚拟机)</p>
 </li>
 <li><p>解释型</p>
 </li>
@@ -256,8 +256,7 @@
 <li><p>字节码：JVM 可以理解的代码，也就是我们看到的 文件名.class 的文件。字节码不面向任何特定的处理器，只面向JVM。</p>
 </li>
 <li><p>源码到运行的过程，如下</p>
-</li>
-<li><p>.java的源文件    —-JDK中的javac编译–&gt;  .class文件    —–JVM—&gt;  二进制机器码</p>
+<p>.java的源文件    —-JDK中的javac编译–&gt;  .class文件    —–JVM—&gt;  二进制机器码</p>
 </li>
 <li><p>JDK：全称Java Development Kit , 它是功能齐全的Java SDK （软件开发工具包）。它拥有 JRE 所拥有的一切，还有 编译器（javac） 和 工具（如：javadoc 和 jdb)。可以创建和编译程序</p>
 </li>
@@ -378,7 +377,40 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">装箱:Integer i = <span class="hljs-number">9</span>;   ===== Integer i = Integer.valueOf(<span class="hljs-number">9</span>);<br>拆箱:<span class="hljs-keyword">int</span> n = i;       ===== <span class="hljs-keyword">int</span> n = i.intValue();<br></code></pre></td></tr></table></figure>
 
 <p><strong>注：包装类型比较是否相等，要哟equals()方法</strong></p>
-
+<h2 id="高频面试题"><a href="#高频面试题" class="headerlink" title="高频面试题"></a>高频面试题</h2><h3 id="String-、StringBuilder、StringBuffer"><a href="#String-、StringBuilder、StringBuffer" class="headerlink" title="String 、StringBuilder、StringBuffer"></a>String 、StringBuilder、StringBuffer</h3><ul>
+<li>String：String的值被创建后不能修改，任何修改都会引发新的String对象的生成</li>
+<li>StringBuffer：和String 类似，但是值是可以被修改的，使用 synchronized来保证线程安全</li>
+<li>StringBuilder：非线程安全</li>
+</ul>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>反射指的在运行状态中， 对于任意一个类都能知道这个类所有的属性和方法；平且对于任意一个对象，都能调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为反射机制。</p>
+<h3 id="深拷贝、浅拷贝"><a href="#深拷贝、浅拷贝" class="headerlink" title="深拷贝、浅拷贝"></a>深拷贝、浅拷贝</h3><p>数据分为基本数据类型和引用数据类型。</p>
+<p>基本数据类型：数据是直接存放在栈中的</p>
+<p>引用数据类型：存放在栈中的是对象的引用地址，真实的对象存放在堆内存中</p>
+<p>浅拷贝：对于基本数据类型，直接复制其数据；对于引用数据类型，拷贝的是其对象的引用地址，新旧对象指向的相同的内存地址，无论修改哪个，另一个一会改变</p>
+<p>深拷贝：对于基本数据类型，直接复制其数据；对于引用数据类型，深拷贝是在内存中开辟新的空间，在新的内存空间中复制一个一模一样的对象，新老对象不共享内存，修改一个不会修改另一个。</p>
+<h3 id="并发、并行"><a href="#并发、并行" class="headerlink" title="并发、并行"></a>并发、并行</h3><p>并发：两个或两个以上事件在同一时间间隔内发生。</p>
+<p>并行：两个或两个以上事件在同一时刻发生</p>
+<h3 id="构造器不可以被重写"><a href="#构造器不可以被重写" class="headerlink" title="构造器不可以被重写"></a>构造器不可以被重写</h3><p>Constructor 不能被重写（Override) ，但是可以被 重载（overload）</p>
+<h3 id="Java只有值传递，对于对象参数，值得内容是对象的引用。"><a href="#Java只有值传递，对于对象参数，值得内容是对象的引用。" class="headerlink" title="Java只有值传递，对于对象参数，值得内容是对象的引用。"></a>Java只有值传递，对于对象参数，值得内容是对象的引用。</h3><h3 id="静态变量-和-成员变量"><a href="#静态变量-和-成员变量" class="headerlink" title="静态变量 和 成员变量"></a>静态变量 和 成员变量</h3><ul>
+<li><p>静态变量存放在方法区中；成员变量存放在堆内存中</p>
+</li>
+<li><p>静态变量与 类 共存亡；成员变量与 对象 共存亡</p>
+</li>
+<li><p>静态变量属于类；成员变量属于对象</p>
+</li>
+<li><p>静态变量可以被对象调用，也可以被类名调用；成员变量只能被对象调用。</p>
+</li>
+</ul>
+<h3 id="静态方法内部-能否发出对-非静态方法的调用"><a href="#静态方法内部-能否发出对-非静态方法的调用" class="headerlink" title="静态方法内部 能否发出对 非静态方法的调用"></a>静态方法内部 能否发出对 非静态方法的调用</h3><ul>
+<li>如何没用显示创建对象的实例，则不可以调用。</li>
+<li>显示的创建对象实例，可以调用。</li>
+</ul>
+<h3 id="重载和重写"><a href="#重载和重写" class="headerlink" title="重载和重写"></a>重载和重写</h3><p>方法的重载和重写都是实现多态的方式，重载是编译时的多态性，重写时运行时的多态性。</p>
+<ul>
+<li>重载：overload，一个类中有多个相同名字的方法，但是具有不同的参数列表（参数类型不同、参数个数不同或两者都不一样）</li>
+<li>重写：override，发生在父类和子类之间，子类对父类的方法进行重写，参数不能改变，返回值可以修改，但必须时父类返回值的派生类。</li>
+</ul>
+<h3 id="abstract-class-抽象类-和-interface-接口"><a href="#abstract-class-抽象类-和-interface-接口" class="headerlink" title="abstract class (抽象类) 和 interface (接口)"></a>abstract class (抽象类) 和 interface (接口)</h3>
             </div>
             <hr>
             <div>
