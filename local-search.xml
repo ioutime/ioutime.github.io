@@ -4,13 +4,27 @@
   
   
   <entry>
-    <title>Java内存区域</title>
-    <link href="/2021/06/27/JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/"/>
-    <url>/2021/06/27/JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/</url>
+    <title>JVM内存结构</title>
+    <link href="/2021/06/27/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/"/>
+    <url>/2021/06/27/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><p>……</p>]]></content>
     
     
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+      <tag>JVM</tag>
+      
+    </tags>
     
   </entry>
   
