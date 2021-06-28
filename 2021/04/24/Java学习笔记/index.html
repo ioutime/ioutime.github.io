@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.2k 字
+      3.3k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      34
+      35
        分钟
     </span>
   
@@ -532,11 +532,18 @@
 </ul>
 <p>拒绝策略</p>
 <ul>
-<li>AbortPolicy：中止策略</li>
-<li>DiscardPolicy：抛弃策略</li>
-<li>DiscardOldestPolicy：抛弃最老策略</li>
-<li>CallerRunsPolicy：调用者运行策略</li>
+<li>AbortPolicy：中止策略，默认的，使用该策略会抛出异常，阻止系统继续运行</li>
+<li>DiscardPolicy：抛弃策略，什么都不做，直接抛弃拒绝的任务</li>
+<li>DiscardOldestPolicy：抛弃最老策略，抛弃阻塞队列中最老的任务</li>
+<li>CallerRunsPolicy：调用者运行策略，</li>
 </ul>
+<p>工作流程：</p>
+<ol>
+<li>调用Excutors类的静态方法newCachedThreadPool 或 newFixedThreadPool</li>
+<li>调用submit 提交 Runnable 或 Callable 对象</li>
+<li>保存好返回的Future 对象，以便得到结果或取消任务</li>
+<li>但不想再提交任何任务时，调用shutdown</li>
+</ol>
 
             </div>
             <hr>
