@@ -87,7 +87,7 @@
     <link href="/2021/06/27/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/"/>
     <url>/2021/06/27/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</url>
     
-    <content type="html"><![CDATA[<h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><p>……</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><h3 id="JVM-运行时内存结构图"><a href="#JVM-运行时内存结构图" class="headerlink" title="JVM 运行时内存结构图"></a>JVM 运行时内存结构图</h3><p><img src="/img/picture/JVM-1.png"></p><p>所有线程共享：</p><ul><li><p>方法区（Method Area)：也叫元空间，用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存的数据【<strong>运行时的常量池也是方法区的一部分</strong>】</p><p><img src="/img/picture/method-1.png"></p></li><li><p>堆区（Heap Area）：占的最大，存放Java<strong>对象的实例</strong></p></li></ul><p>线程私有（线程独立）：</p><ul><li><p>栈区（Stack Area)：每个方法被执行的时候，都会同步创建一个<strong>栈帧</strong>（Stack Frame）用于存储<strong>局部变量表、操作数栈</strong>、动态连接、方法出口等</p><p><img src="/img/picture/Stack-1.png"></p></li><li><p>程序计数器（Program Counter Register）：一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器</p></li><li><p>本地方法栈（Native Method Area）：调用本地方法，和栈区通过本地方法接口（JNI）通信</p></li></ul><h3 id="堆区（Heap-Area"><a href="#堆区（Heap-Area" class="headerlink" title="堆区（Heap Area)"></a>堆区（Heap Area)</h3><ul><li>新生代（Young）：又分伊甸区（Eden)、两个幸存区（From Survivor, To  Survivor)</li><li>老年代（Old）：</li></ul><p><img src="/img/picture/Heap-1.png"></p>]]></content>
     
     
     <categories>
