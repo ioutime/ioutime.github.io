@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      537 字
+      866 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      9
        分钟
     </span>
   
@@ -229,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：几秒前
+                  本文最后更新于：5 分钟前
                 
               </p>
             
@@ -259,7 +259,30 @@
 <h3 id="生存后死亡"><a href="#生存后死亡" class="headerlink" title="生存后死亡"></a>生存后死亡</h3><p>即使在可达性分析算法中判定为不可达对象，也不是”非死不可“，至少要经历<strong>两次标记</strong>过程。</p>
 <p>…….</p>
 <h3 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h3><p>方法区的常量和类型是可以被GC回收，但是类型的回收条件苛刻，即使满足了条件，也是仅仅是”被允许”，关于类型是否要被进行回收，HotSpot虚拟机提供了-Xnoclassgc参数进行控制。</p>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h4>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h4><ul>
+<li><p>部分收集（Partial GC）</p>
+<ul>
+<li>新生代收集（Minot GC/Young GC）</li>
+<li>老年代收集（Major GC/Old GC）</li>
+<li>混合收集（Mixed GC）        </li>
+</ul>
+</li>
+<li><p>整堆收集（Full GC）：收集整个Java堆和方法区的垃圾收集</p>
+</li>
+</ul>
+<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>首先标记出所需回收的对象，在标记完成后统一回收掉所有被标记的对象，它的标记过程其实就是前面的根搜索算法中判定垃圾对象的标记过程。</p>
+<p>缺点：</p>
+<ul>
+<li>执行效率不稳定</li>
+<li>内存空间碎片化问题</li>
+</ul>
+<h4 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h4><p>它将内存按容量分为大小相等的两块，每次只使用其中的一块（对象面），当这一块的内存用完了，就将还存活着的对象复制到另外一块内存上面（空闲面），然后再把已使用过的内存空间一次清理掉。</p>
+<p>缺点：</p>
+<ul>
+<li>内存缩小一半，空间浪费太多</li>
+</ul>
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>该算法标记的过程与标记—清除算法中的标记过程一样，但对标记后出的垃圾对象的处理情况有所不同，它不是直接对可回收对象进行清理，而是让所有的对象都向一端移动，然后直接清理掉端边界以外的内存</p>
+
             </div>
             <hr>
             <div>
