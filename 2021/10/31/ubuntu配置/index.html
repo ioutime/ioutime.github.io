@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="内存结构">
+  <meta name="description" content="ubuntu配置">
   <meta name="author" content="ioutime">
   <meta name="keywords" content="">
   
-  <title>JVM内存结构 - ioutime</title>
+  <title>ubuntu配置 - ioutime</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="JVM内存结构">
+            <span class="h2" id="subtitle" title="ubuntu配置">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-27 23:22" pubdate>
-        2021年6月27日 晚上
+      <time datetime="2021-10-31 22:26" pubdate>
+        2021年10月31日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      248 字
+      316 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      5
        分钟
     </span>
   
@@ -225,61 +225,93 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">JVM内存结构</h1>
+            <h1 style="display: none">ubuntu配置</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：4 个月前
+                  本文最后更新于：2 分钟前
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><h3 id="JVM-运行时内存结构图"><a href="#JVM-运行时内存结构图" class="headerlink" title="JVM 运行时内存结构图"></a>JVM 运行时内存结构图</h3><p><img src="/img/picture/JVM-1.png" srcset="/img/loading.gif" lazyload></p>
-<p>所有线程共享：</p>
-<ul>
-<li><p>方法区（Method Area)：也叫元空间，用于存储已被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存的数据【<strong>运行时的常量池也是方法区的一部分</strong>】</p>
-<p><img src="/img/picture/method-1.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>堆区（Heap Area）：占的最大，存放Java<strong>对象的实例</strong></p>
-</li>
-</ul>
-<p>线程私有（线程独立）：</p>
-<ul>
-<li><p>栈区（Stack Area)：每个方法被执行的时候，都会同步创建一个<strong>栈帧</strong>（Stack Frame）用于存储<strong>局部变量表、操作数栈</strong>、动态连接、方法出口等</p>
-<p><img src="/img/picture/Stack-1.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>程序计数器（Program Counter Register）：一块较小的内存空间，可以看作当前线程所执行的字节码的行号指示器</p>
-</li>
-<li><p>本地方法栈（Native Method Area）：调用本地方法，和栈区通过本地方法接口（JNI）通信</p>
-</li>
-</ul>
-<h3 id="堆区（Heap-Area"><a href="#堆区（Heap-Area" class="headerlink" title="堆区（Heap Area)"></a>堆区（Heap Area)</h3><ul>
-<li>新生代（Young）：又分伊甸区（Eden)、两个幸存区（From Survivor, To  Survivor)</li>
-<li>老年代（Old）：</li>
-</ul>
-<p><img src="/img/picture/Heap-1.png" srcset="/img/loading.gif" lazyload></p>
+              <h2 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h2><blockquote>
+<p>文件位置/etc/apt/sources.list</p>
+</blockquote>
+<ol>
+<li>备份</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>打开sources.list文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>删除原来内容，替换为以下内容</li>
+</ol>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs tex"><span class="hljs-params">#</span>阿里云镜像<br><br>deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse <br><br>deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse <br><br>deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse <br><br>deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse <br><br>deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse <br><br>deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse <br><br>deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse <br><br>deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse <br><br>deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse <br><br>deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>更新</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update<br>sudo apt upgrade<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="取消sudo密码"><a href="#取消sudo密码" class="headerlink" title="取消sudo密码"></a>取消sudo密码</h2><blockquote>
+<p>文件位置 /etc/sudoers</p>
+</blockquote>
+<ol>
+<li>打开文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim /etc/sudoers<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>添加如下内容</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">includedir /etc/sudoers.d</span><br>admin ALL=(ALL)  NOPASSWD:ALL<br>you_name ALL=(ALL) NOPASSWD:ALL<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>强制退出，wq!</li>
+</ol>
+<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>以zsh主题为例</p>
+<ol>
+<li>查看当前有什么主题</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat /etc/shells<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装zsh</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install zsh<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>更换当前主题</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>安装git</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install git<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>安装oh-my-zsh</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sh -c &quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>更换自己喜欢的主题</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim ~/.zshrc<br><span class="hljs-meta">#</span><span class="bash">更改 ZSH_THEME=<span class="hljs-string">&quot;robbyrussell&quot;</span></span><br>ZSH_THEME=&quot;y&quot;<br></code></pre></td></tr></table></figure>
+
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/JVM/">JVM</a>
-                    
-                  </div>
                 
               </div>
               
@@ -294,18 +326,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/27/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM类加载机制</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/24/Java%E5%AE%9E%E7%8E%B0%E6%A0%88/">
-                        <span class="hidden-mobile">Java实现栈</span>
+                      <a href="/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">Java中的集合问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
