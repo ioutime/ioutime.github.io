@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="JVM垃圾回收机制(GC)">
+  <meta name="description" content="编码格式">
   <meta name="author" content="ioutime">
   <meta name="keywords" content="">
   
-  <title>JVM垃圾回收机制(GC) - ioutime</title>
+  <title>编码格式 - ioutime</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="JVM垃圾回收机制(GC)">
+            <span class="h2" id="subtitle" title="编码格式">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-27 23:37" pubdate>
-        2021年6月27日 晚上
+      <time datetime="2021-11-04 00:09" pubdate>
+        2021年11月4日 凌晨
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      798 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      9
        分钟
     </span>
   
@@ -225,111 +225,116 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">JVM垃圾回收机制(GC)</h1>
+            <h1 style="display: none">编码格式</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：4 个月前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h2><h3 id="判断对象是否已死"><a href="#判断对象是否已死" class="headerlink" title="判断对象是否已死"></a>判断对象是否已死</h3><ul>
-<li><p><strong>引用计数算法</strong>：在对象中添加一个引用计数器，在被引用的时候就加一，当引用失效时，就减一；当引用计数器为0时就是代表该对象不会在被引用。缺点：无法解决对象之间的相互引用问题。</p>
-</li>
-<li><p><strong>可达性分析算法</strong>：从根节点集合”GC Root Set” 开始，根据引用关系向下搜索，搜索过程的路径称为”引用链”，无法到达的就意味着是垃圾。</p>
-</li>
+              <h1 id="编码格式详解"><a href="#编码格式详解" class="headerlink" title="编码格式详解"></a><a href="">编码格式详解</a></h1><p> 基本知识：</p>
+<ul>
+<li>计算机中最小单元为 <strong>一个字节</strong> 【1 byte = 8 bit】 0~(2^8 - 1)</li>
 </ul>
-<p>固定可作为GC Roots的对象包括：</p>
+<h2 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h2><p> 定义：多个字符的集合； </p>
+<p> 常见的字符集：</p>
 <ol>
-<li>栈帧中的本地变量表中引用的对象；</li>
-<li>方法区中类静态属性引用的对象；</li>
-<li>方法区中常量引用的对象；</li>
-<li>本地方法栈中JNI引用的对象；</li>
-<li>Java虚拟机内部的引用；</li>
-<li>所有被同步锁（synchronized）持有的对象；</li>
-<li>反应Java虚拟机内部情况JMXBean、JVMTI中注册的回调、本地代码缓存等。</li>
+<li><strong>ASCII字符集</strong></li>
+<li><strong>GB2312字符集</strong></li>
+<li>BIG5字符集</li>
+<li><strong>GB18030字符集</strong></li>
+<li><strong>Unicode字符集</strong></li>
 </ol>
-<h3 id="引用（reference）"><a href="#引用（reference）" class="headerlink" title="引用（reference）"></a>引用（reference）</h3><ul>
-<li>强引用：普遍存在的引用赋值，只要引用关系还在，GC 永远不会回收被引用的对象,eg:” Object obj = new Object( )  “；</li>
-<li>软引用：一些有用，但非必须的对象，会在内存溢出之前，被列入第二次回收对象列中；</li>
-<li>弱引用：描述那些非必须的对象，强度比软引用更弱一点，只能存活到下一次垃圾收集发生之前；</li>
-<li>虚引用：最弱的一种引用关系，为对象设置该引用唯一目的是为了在这个对象被GC回收时收到一个系统通知。 虚引用必须和引用队列（ReferenceQueue）联合使用</li>
+<h3 id="字符集发展过程"><a href="#字符集发展过程" class="headerlink" title="字符集发展过程"></a>字符集发展过程</h3><ol>
+<li>ASCII码 【美国，英文字母、标点符号、阿拉伯数字】</li>
+<li>Latin-1 【欧洲，加入希腊字母】</li>
+<li>GB2312  【中国，加入汉字】</li>
+<li>GBK     【加入生僻字，繁体字和日韩汉字】</li>
+<li>Unicode 【ISO国际标准化组织一统江湖】</li>
+<li>UTF-8   【再编码】</li>
+</ol>
+<h2 id="ASCII码字符集"><a href="#ASCII码字符集" class="headerlink" title="ASCII码字符集"></a>ASCII码字符集</h2><p>全称：美国信息交换标准码，<strong>实现方式与字符集同名</strong></p>
+<ul>
+<li>只用了一个字节的后 <strong><code>7</code></strong> bit【第一位<code>0</code>】，所以只有 <code>128</code> 种字符【<code>32</code>个不可打印字符】</li>
+<li>二进制表示</li>
 </ul>
-<h3 id="堆内存常见的分配策略"><a href="#堆内存常见的分配策略" class="headerlink" title="堆内存常见的分配策略"></a>堆内存常见的分配策略</h3><ul>
-<li>对象优先进入Eden区分配<ul>
-<li>当Eden内存几乎被分配完全了，如果此时再为其他的对象分配内存，虚拟机就会发起一次Minor GC,如果之前的对象无法存入幸存区，只能通过<strong>分配担保机制</strong>将新生代的对象提前转移到老年代中</li>
+<h2 id="GB2312字符集"><a href="#GB2312字符集" class="headerlink" title="GB2312字符集"></a>GB2312字符集</h2><p> <strong>实现方式与字符集同名</strong></p>
+<ul>
+<li>分区表示: GB2312中对所收汉字进行了“分区”处理，每区含有94个汉字/符号。这种表示方式也称为区位码</li>
+<li>双字节表示: 两个字节中前面的字节为第一字节，后面的字节为第二字节。习惯上称第一字节为<code>高字节</code> ，而称第二字节为<code>低字节</code>。</li>
+</ul>
+<h2 id="GBK字符集"><a href="#GBK字符集" class="headerlink" title="GBK字符集"></a>GBK字符集</h2><p> <strong>实现方式与字符集同名</strong></p>
+<ul>
+<li>是GB2312的扩展</li>
+<li>向上兼容，使用GB2312编码的可以使用GBK解码</li>
+</ul>
+<h2 id="Unicode字符集"><a href="#Unicode字符集" class="headerlink" title="Unicode字符集"></a><strong>Unicode字符集</strong></h2><p> 全称： 统一的字符编码标准</p>
+<ul>
+<li><p>Unicode 只是一个符号集，它只规定了<strong>符号对应的二进制代码</strong>，却没有规定这个二进制代码应该如何存储。</p>
+</li>
+<li><p>Unicode是一本字典，他不是一次性定义的，是<strong>分区定义</strong>的，每个区可以存　<code>2＾16</code> 字符【<code>65536</code>】,把它称之为一个<strong>平面</strong>（plane)</p>
+<p>目前有<code>2^5</code> 平面【<code>17</code>】</p>
+<ul>
+<li>BMP【基本平面】：<code>0 ~ 2^16 - 1</code> ，（U+0000 到 U+FFFF）</li>
+<li>SMP【辅助平面】：剩下的字符，（U+010000 到 U+10FFFF）</li>
 </ul>
 </li>
-<li>大对象直接进入老年代<ul>
-<li>为什么要这样——为了避免大对象分配内存由于分配担保机制带来的复制导致降低效率</li>
+<li><p>Unicode 有多种实现方式：</p>
+<ul>
+<li>UTF-8 【变长 1 ~ 4 字节】</li>
+<li>UTF-16 【两个 或 四个 字节】</li>
+<li>UTF-32  【四个字节】</li>
 </ul>
 </li>
-<li>长期存活的对象进入老年代<ul>
-<li>虚拟机给每个对象一个对象年龄(Age) 计数器</li>
 </ul>
-</li>
-</ul>
-<h3 id="生存后死亡"><a href="#生存后死亡" class="headerlink" title="生存后死亡"></a>生存后死亡</h3><p>即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程；可达性分析法中不可达的对象被第一次标记并且进行一次筛选，筛选的条件是此对象是否有必要执行 finalize 方法。当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行。</p>
-<p>被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。</p>
-<h3 id="如何判断一个常量是废弃常量"><a href="#如何判断一个常量是废弃常量" class="headerlink" title="如何判断一个常量是废弃常量"></a>如何判断一个常量是废弃常量</h3><p>运行时常量池主要回收的是废弃的常量。那么，我们如何判断一个常量是废弃常量呢?</p>
-<p>假如在常量池中存在字符串”abc” ,如果当前没有任何String对象引用该字符串常量的话，就说明常量”abc”就是废弃常量,如果这时发生内存回收的话而且有必要的话，” abc”就会被系统清理出常量池。</p>
-<h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
-<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a><strong>UTF-8</strong></h3><p>全称：Unicode 转换格式 8-bit </p>
 <ul>
-<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
-<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+<li><strong>utf8是 Unicode 的一种实现方式</strong></li>
+<li>utf-8是一种<strong>变长的编码方式</strong>，使用 <strong><code>1</code> ~ <code>4</code></strong> 个字节表示一个字符</li>
+<li>如果一个字节的第一位是<code>0</code>，则这个字节单独就是一个字符；如果第一位是<code>1</code>，则连续有多少个<code>1</code>，就表示当前字符占用多少个字节</li>
 </ul>
-<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h4><p>分代算法：根据对象存活周期的不同将内存划分为几块，一般是新生代和老年代，新生代基本采用复制算法，老年代采用标记整理算法。</p>
-<ul>
-<li><p>部分收集（Partial GC）</p>
-<ul>
-<li>新生代收集（Minor GC/Young GC）</li>
-<li>老年代收集（Major GC/Old GC）</li>
-<li>混合收集（Mixed GC）        </li>
+<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><ul>
+<li>基本平面的字符占用 2 个字节，辅助平面的字符占用 4 个字节</li>
+<li>当我们遇到两个字节，发现它的码点在 U+D800 到 U+DBFF 之间，就可以断定，紧跟在后面的两个字节的码点，应该在 U+DC00 到 U+DFFF 之间，这四个字节必须放在一起解读。</li>
 </ul>
-</li>
-<li><p>整堆收集（Full GC）：收集整个Java堆和方法区的垃圾收集</p>
-</li>
-</ul>
-<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>标记阶段是把所有活动对象（可达对象，reachable）都做上标记的阶段。 清除阶段是把那些没有标记的对象，也就是非活动对象回收的阶段。</p>
-<p>缺点：</p>
-<ul>
-<li>执行效率不稳定</li>
-<li>内存空间碎片化问题</li>
-</ul>
-<h4 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h4><p>它将内存按容量分为大小相等的两块，每次只使用其中的一块（对象面），当这一块的内存用完了，就将还存活着的对象复制到另外一块内存上面（空闲面），然后再把已使用过的内存空间一次清理掉。</p>
-<p>缺点：</p>
-<ul>
-<li>内存缩小一半，空间浪费太多</li>
-</ul>
-<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>该算法标记的过程与标记—清除算法中的标记过程一样，但对标记后出的垃圾对象的处理情况有所不同，它不是直接对可回收对象进行清理，而是让所有的对象都向一端移动，然后直接清理掉端边界以外的内存</p>
-<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><p>![](/img/picture/2021-7-16 1-0.png)</p>
-<p>![](/img/picture/2021-7-16 1-1.png)</p>
+<h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p> <strong>四个字节</strong>实现Unicode</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th align="center">主要字符集</th>
+<th align="center">字符集实现方式</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ASCII</td>
+<td align="center">ASCII</td>
+<td align="center">美国定义的，主要包含英文字母、数字等,128个字符【第一位没用】，32个不可打印字符</td>
+</tr>
+<tr>
+<td align="center">GB2312</td>
+<td align="center">GB2312</td>
+<td align="center">中国定义，加入汉字</td>
+</tr>
+<tr>
+<td align="center">GBK</td>
+<td align="center">GBK</td>
+<td align="center">兼容GB2312</td>
+</tr>
+<tr>
+<td align="center">Unicode</td>
+<td align="center">UTF-8/UTF-16/UTF-32</td>
+<td align="center">UTF-8变长【1~4】、UTF-16【2或4】、UTF-32【4】</td>
+</tr>
+</tbody></table>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/JVM/">JVM</a>
-                    
-                  </div>
                 
               </div>
               
@@ -344,18 +349,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java中的集合问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/27/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/">
-                        <span class="hidden-mobile">JVM类加载机制</span>
+                      <a href="/2021/10/31/ubuntu%E9%85%8D%E7%BD%AE/">
+                        <span class="hidden-mobile">ubuntu配置</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
