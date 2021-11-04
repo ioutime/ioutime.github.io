@@ -21,7 +21,7 @@ windows10更新问题
 
 2、使用易升或更新程序（MediaCreationTool****.exe）更新，提示：“抱歉，我们很难确定你的电脑能否运行Windows 10，请关闭安装程序，然后再试一次。”；如下图。
 
-![问题截图](Windows10更新问题/问题截图.jpg)
+<img src="Windows10更新问题/问题截图.jpg" alt="问题截图" style="zoom:50%;" />
 
 ### 解决方法：
 
@@ -31,7 +31,7 @@ windows10更新问题
 
 2、win+R 输入msconfig 按回车，选择引导，正常的如下图
 
-![windows10-2](Windows10更新问题/windows10-2.png)
+<img src="Windows10更新问题/windows10-2.png" alt="windows10-2" style="zoom:50%;" />
 
 如果为空白，会报不能此电脑是否运行的系统，是因为运行msconfig，在引导页中是空白的，看不到引导的系统（但是电脑是正常可以开机的）；造成的原因可能是你最近装过双系统。
 
@@ -45,7 +45,7 @@ windows10更新问题
 
 查看你的分区类型
 
-![windows10-4](../img/picture/windows10-4.png)
+![windows10-4](Windows10更新问题/windows10-4.png)
 
 我的是GPT，你的可能是MBR
 

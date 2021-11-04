@@ -756,7 +756,7 @@ gap_y: 10px
 # Lazy load the images of post.
 # See: https://github.com/tuupola/lazyload
 lazyload:
-enable: true
+enable: false
 # Optional values: gif | block
 placeholder: gif
 

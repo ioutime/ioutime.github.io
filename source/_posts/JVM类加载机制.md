@@ -52,6 +52,6 @@ JVM类加载机制
 
 加载过程
 
-![ClassLoader](JVM类加载机制/ClassLoader.png)
+<img src="JVM类加载机制/ClassLoader.png" alt="ClassLoader" style="zoom:50%;" />
 
 **不可重写String类**
