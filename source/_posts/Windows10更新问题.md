@@ -6,10 +6,9 @@ categories:
 tags:
 - windows10
 - windows10更新问题
-description: windows10更新问题,抱歉，我们很难确定你的电脑能否运行Windows 10，请关闭安装程序，然后再试一次;
 ---
 
-JVM垃圾回收机制(GC)。
+windows10更新问题,抱歉，我们很难确定你的电脑能否运行Windows 10，请关闭安装程序，然后再试一次;
 
 <!-- more -->
 

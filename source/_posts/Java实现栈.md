@@ -5,10 +5,9 @@ categories:
 - 数据结构
 tags:
 - 栈
-description: Java实现栈
 ---
 
-JVM垃圾回收机制(GC)。
+栈
 
 <!-- more -->
 

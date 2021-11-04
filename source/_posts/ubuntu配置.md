@@ -1,14 +1,14 @@
 ---
 title: ubuntu配置
 categories:
-  - null
+  - ubuntu
 tags:
-  - null
+  - ubuntu
 description: ubuntu配置
 date: 2021-10-31 22:26:58
 ---
 
-JVM垃圾回收机制(GC)。
+ubuntu配置
 
 <!-- more -->
 

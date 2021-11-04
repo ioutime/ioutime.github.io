@@ -9,7 +9,7 @@ tags:
 description: JVM类加载机制
 ---
 
-JVM垃圾回收机制(GC)。
+JVM类加载机制
 
 <!-- more -->
 

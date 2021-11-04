@@ -5,5 +5,9 @@ categories:
 - 
 tags:
 - 
-description: {{ title }}
 ---
+
+ {{ title }}
+
+<!-- more -->
+

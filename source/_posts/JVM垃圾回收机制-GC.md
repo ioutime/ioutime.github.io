@@ -6,10 +6,9 @@ categories:
 tags:
 - Java
 - JVM
-description: JVM垃圾回收机制(GC)
 ---
 
-JVM垃圾回收机制(GC)。
+JVM垃圾回收机制(GC)
 
 <!-- more -->
 

@@ -5,15 +5,12 @@ categories:
 - web
 tags:
 - html
-description: html常用标签
+description: 
 ---
 
-JVM垃圾回收机制(GC)。
+html常用标签
 
 <!-- more -->
-
-HTML
-===
 
 1、Html简介
 ---

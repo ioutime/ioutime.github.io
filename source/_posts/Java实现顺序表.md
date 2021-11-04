@@ -6,10 +6,10 @@ categories:
 tags:
 - 线性表
 - 顺序表
-description: Java实现顺序表
+description: Java实现
 ---
 
-JVM垃圾回收机制(GC)。
+顺序表
 
 <!-- more -->
 

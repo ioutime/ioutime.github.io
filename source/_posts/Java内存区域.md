@@ -6,10 +6,10 @@ categories:
 tags:
 - Java
 - JVM
-description: 内存结构
+description: 
 ---
 
-JVM垃圾回收机制(GC)。
+内存结构
 
 <!-- more -->
 

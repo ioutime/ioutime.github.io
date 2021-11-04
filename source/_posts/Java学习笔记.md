@@ -9,7 +9,7 @@ description: Java学习笔记
 sticky: 100
 ---
 
-JVM垃圾回收机制(GC)。
+Java学习笔记
 
 <!-- more -->
 

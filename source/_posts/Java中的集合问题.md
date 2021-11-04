@@ -5,10 +5,10 @@ categories:
 - Java
 tags:
 - Java集合
-description: 一些集合总结
+description:
 ---
 
-JVM垃圾回收机制(GC)。
+ 一些集合总结
 
 <!-- more -->
 

@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: ioutime
-subtitle: ''
+title: ioutime's blog
+subtitle: 'Life always makes fun of us'
 description: ''
 keywords:
 author: ioutime
@@ -102,6 +102,12 @@ hide_posts:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: stun  # 指定主题
+
+#Search
+search:
+  path: search.json
+  field: post
+  content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
