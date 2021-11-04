@@ -1,244 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="编码格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码格式">
+<meta property="og:url" content="https://ioutime.github.io/2021/11/04/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="ioutime">
+<meta property="og:description" content="编码格式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-03T16:09:07.000Z">
+<meta property="article:modified_time" content="2021-11-04T07:56:04.628Z">
+<meta property="article:author" content="ioutime">
+<meta name="twitter:card" content="summary"><title>编码格式 | ioutime</title><link ref="canonical" href="https://ioutime.github.io/2021/11/04/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">ioutime</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">编码格式</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-11-04</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-04</span></span></div></header><div class="post-body"><p>JVM垃圾回收机制(GC)。</p>
+<span id="more"></span>
 
 
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="编码格式">
-  <meta name="author" content="ioutime">
-  <meta name="keywords" content="">
-  
-  <title>编码格式 - ioutime</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ioutime's blog</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="编码格式">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-04 00:09" pubdate>
-        2021年11月4日 凌晨
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      798 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      9
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">编码格式</h1>
-            
-              <p class="note note-info">
-                
-                  本文最后更新于：44 分钟前
-                
-              </p>
-            
-            <div class="markdown-body">
-              <h1 id="编码格式详解"><a href="#编码格式详解" class="headerlink" title="编码格式详解"></a><a href="">编码格式详解</a></h1><p> 基本知识：</p>
+        <h1 id="编码格式详解">
+          <a href="#编码格式详解" class="heading-link"><i class="fas fa-link"></i></a><a href="#编码格式详解" class="headerlink" title="编码格式详解"></a><a href>编码格式详解</a></h1>
+      <p> 基本知识：</p>
 <ul>
 <li>计算机中最小单元为 <strong>一个字节</strong> 【1 byte = 8 bit】 0~(2^8 - 1)</li>
 </ul>
-<h2 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h2><p> 定义：多个字符的集合； </p>
+
+        <h2 id="字符集">
+          <a href="#字符集" class="heading-link"><i class="fas fa-link"></i></a><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h2>
+      <p> 定义：多个字符的集合； </p>
 <p> 常见的字符集：</p>
 <ol>
 <li><strong>ASCII字符集</strong></li>
@@ -247,7 +54,10 @@
 <li><strong>GB18030字符集</strong></li>
 <li><strong>Unicode字符集</strong></li>
 </ol>
-<h3 id="字符集发展过程"><a href="#字符集发展过程" class="headerlink" title="字符集发展过程"></a>字符集发展过程</h3><ol>
+
+        <h3 id="字符集发展过程">
+          <a href="#字符集发展过程" class="heading-link"><i class="fas fa-link"></i></a><a href="#字符集发展过程" class="headerlink" title="字符集发展过程"></a>字符集发展过程</h3>
+      <ol>
 <li>ASCII码 【美国，英文字母、标点符号、阿拉伯数字】</li>
 <li>Latin-1 【欧洲，加入希腊字母】</li>
 <li>GB2312  【中国，加入汉字】</li>
@@ -255,22 +65,34 @@
 <li>Unicode 【ISO国际标准化组织一统江湖】</li>
 <li>UTF-8   【再编码】</li>
 </ol>
-<h2 id="ASCII码字符集"><a href="#ASCII码字符集" class="headerlink" title="ASCII码字符集"></a>ASCII码字符集</h2><p>全称：美国信息交换标准码，<strong>实现方式与字符集同名</strong></p>
+
+        <h2 id="ASCII码字符集">
+          <a href="#ASCII码字符集" class="heading-link"><i class="fas fa-link"></i></a><a href="#ASCII码字符集" class="headerlink" title="ASCII码字符集"></a>ASCII码字符集</h2>
+      <p>全称：美国信息交换标准码，<strong>实现方式与字符集同名</strong></p>
 <ul>
 <li>只用了一个字节的后 <strong><code>7</code></strong> bit【第一位<code>0</code>】，所以只有 <code>128</code> 种字符【<code>32</code>个不可打印字符】</li>
 <li>二进制表示</li>
 </ul>
-<h2 id="GB2312字符集"><a href="#GB2312字符集" class="headerlink" title="GB2312字符集"></a>GB2312字符集</h2><p> <strong>实现方式与字符集同名</strong></p>
+
+        <h2 id="GB2312字符集">
+          <a href="#GB2312字符集" class="heading-link"><i class="fas fa-link"></i></a><a href="#GB2312字符集" class="headerlink" title="GB2312字符集"></a>GB2312字符集</h2>
+      <p> <strong>实现方式与字符集同名</strong></p>
 <ul>
 <li>分区表示: GB2312中对所收汉字进行了“分区”处理，每区含有94个汉字/符号。这种表示方式也称为区位码</li>
 <li>双字节表示: 两个字节中前面的字节为第一字节，后面的字节为第二字节。习惯上称第一字节为<code>高字节</code> ，而称第二字节为<code>低字节</code>。</li>
 </ul>
-<h2 id="GBK字符集"><a href="#GBK字符集" class="headerlink" title="GBK字符集"></a>GBK字符集</h2><p> <strong>实现方式与字符集同名</strong></p>
+
+        <h2 id="GBK字符集">
+          <a href="#GBK字符集" class="heading-link"><i class="fas fa-link"></i></a><a href="#GBK字符集" class="headerlink" title="GBK字符集"></a>GBK字符集</h2>
+      <p> <strong>实现方式与字符集同名</strong></p>
 <ul>
 <li>是GB2312的扩展</li>
 <li>向上兼容，使用GB2312编码的可以使用GBK解码</li>
 </ul>
-<h2 id="Unicode字符集"><a href="#Unicode字符集" class="headerlink" title="Unicode字符集"></a><strong>Unicode字符集</strong></h2><p> 全称： 统一的字符编码标准</p>
+
+        <h2 id="Unicode字符集">
+          <a href="#Unicode字符集" class="heading-link"><i class="fas fa-link"></i></a><a href="#Unicode字符集" class="headerlink" title="Unicode字符集"></a><strong>Unicode字符集</strong></h2>
+      <p> 全称： 统一的字符编码标准</p>
 <ul>
 <li><p>Unicode 只是一个符号集，它只规定了<strong>符号对应的二进制代码</strong>，却没有规定这个二进制代码应该如何存储。</p>
 </li>
@@ -289,18 +111,30 @@
 </ul>
 </li>
 </ul>
-<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a><strong>UTF-8</strong></h3><p>全称：Unicode 转换格式 8-bit </p>
+
+        <h3 id="UTF-8">
+          <a href="#UTF-8" class="heading-link"><i class="fas fa-link"></i></a><a href="#UTF-8" class="headerlink" title="UTF-8"></a><strong>UTF-8</strong></h3>
+      <p>全称：Unicode 转换格式 8-bit </p>
 <ul>
 <li><strong>utf8是 Unicode 的一种实现方式</strong></li>
 <li>utf-8是一种<strong>变长的编码方式</strong>，使用 <strong><code>1</code> ~ <code>4</code></strong> 个字节表示一个字符</li>
 <li>如果一个字节的第一位是<code>0</code>，则这个字节单独就是一个字符；如果第一位是<code>1</code>，则连续有多少个<code>1</code>，就表示当前字符占用多少个字节</li>
 </ul>
-<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><ul>
+
+        <h3 id="UTF-16">
+          <a href="#UTF-16" class="heading-link"><i class="fas fa-link"></i></a><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3>
+      <ul>
 <li>基本平面的字符占用 2 个字节，辅助平面的字符占用 4 个字节</li>
 <li>当我们遇到两个字节，发现它的码点在 U+D800 到 U+DBFF 之间，就可以断定，紧跟在后面的两个字节的码点，应该在 U+DC00 到 U+DFFF 之间，这四个字节必须放在一起解读。</li>
 </ul>
-<h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p> <strong>四个字节</strong>实现Unicode</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+
+        <h3 id="UTF-32">
+          <a href="#UTF-32" class="heading-link"><i class="fas fa-link"></i></a><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3>
+      <p> <strong>四个字节</strong>实现Unicode</p>
+
+        <h2 id="总结">
+          <a href="#总结" class="heading-link"><i class="fas fa-link"></i></a><a href="#总结" class="headerlink" title="总结"></a>总结</h2>
+      <div class="table-container"><table>
 <thead>
 <tr>
 <th align="center">主要字符集</th>
@@ -328,192 +162,16 @@
 <td align="center">UTF-8/UTF-16/UTF-32</td>
 <td align="center">UTF-8变长【1~4】、UTF-16【2或4】、UTF-32【4】</td>
 </tr>
-</tbody></table>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/10/31/ubuntu%E9%85%8D%E7%BD%AE/">
-                        <span class="hidden-mobile">ubuntu配置</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://github.com/ioutime" target="_blank" rel="nofollow noopener"><span>GitHub</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-
-  
-
-  
-</footer>
-
-
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
-
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
-</html>
+</tbody></table></div>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://ioutime.github.io">ioutime</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://ioutime.github.io/2021/11/04/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/">https://ioutime.github.io/2021/11/04/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/10/31/ubuntu%E9%85%8D%E7%BD%AE/"><span class="paginator-prev__text">ubuntu配置</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">
+          编码格式详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">
+          字符集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%8F%91%E5%B1%95%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          字符集发展过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASCII%E7%A0%81%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.2.</span> <span class="toc-text">
+          ASCII码字符集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GB2312%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.3.</span> <span class="toc-text">
+          GB2312字符集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GBK%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.4.</span> <span class="toc-text">
+          GBK字符集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unicode%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.5.</span> <span class="toc-text">
+          Unicode字符集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UTF-8"><span class="toc-number">1.5.1.</span> <span class="toc-text">
+          UTF-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UTF-16"><span class="toc-number">1.5.2.</span> <span class="toc-text">
+          UTF-16</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UTF-32"><span class="toc-number">1.5.3.</span> <span class="toc-text">
+          UTF-32</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">
+          总结</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="http://pic.yupoo.com/ioutime/cbb93e5d/3080783b.png" alt="avatar"></div><p class="sidebar-ov-author__text">ioutime's blog</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>ioutime</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>

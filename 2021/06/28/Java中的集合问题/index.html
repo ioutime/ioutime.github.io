@@ -1,270 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="一些集合总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的集合问题">
+<meta property="og:url" content="https://ioutime.github.io/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="ioutime">
+<meta property="og:description" content="一些集合总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-28T12:11:02.000Z">
+<meta property="article:modified_time" content="2021-11-04T07:56:32.319Z">
+<meta property="article:author" content="ioutime">
+<meta property="article:tag" content="Java集合">
+<meta name="twitter:card" content="summary"><title>Java中的集合问题 | ioutime</title><link ref="canonical" href="https://ioutime.github.io/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">ioutime</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Java中的集合问题</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-04</span></span></div></header><div class="post-body"><p>JVM垃圾回收机制(GC)。</p>
+<span id="more"></span>
 
 
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="一些集合总结">
-  <meta name="author" content="ioutime">
-  <meta name="keywords" content="">
-  
-  <title>Java中的集合问题 - ioutime</title>
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
-
-  
-    
-    
+        <h2 id="集合">
+          <a href="#集合" class="heading-link"><i class="fas fa-link"></i></a><a href="#集合" class="headerlink" title="集合"></a>集合</h2>
       
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-<!-- 自定义样式保持在最底部 -->
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-
-<body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>ioutime's blog</strong>&nbsp;</a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
-          </li>
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Java中的集合问题">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-28 20:11" pubdate>
-        2021年6月28日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      730 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      8
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">Java中的集合问题</h1>
-            
-              <p class="note note-info">
-                
-                  本文最后更新于：4 个月前
-                
-              </p>
-            
-            <div class="markdown-body">
-              <h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="List-、Set、Map"><a href="#List-、Set、Map" class="headerlink" title="List 、Set、Map"></a>List 、Set、Map</h3><ul>
+        <h3 id="List-、Set、Map">
+          <a href="#List-、Set、Map" class="heading-link"><i class="fas fa-link"></i></a><a href="#List-、Set、Map" class="headerlink" title="List 、Set、Map"></a>List 、Set、Map</h3>
+      <ul>
 <li>List：有序（存取元素有序）</li>
 <li>Set：无序，不重复</li>
 <li>Map：键值对，key不能重复</li>
 </ul>
-<h3 id="ArrayList-、LinkedList"><a href="#ArrayList-、LinkedList" class="headerlink" title="ArrayList 、LinkedList"></a>ArrayList 、LinkedList</h3><ul>
+
+        <h3 id="ArrayList-、LinkedList">
+          <a href="#ArrayList-、LinkedList" class="heading-link"><i class="fas fa-link"></i></a><a href="#ArrayList-、LinkedList" class="headerlink" title="ArrayList 、LinkedList"></a>ArrayList 、LinkedList</h3>
+      <ul>
 <li>底层实现：ArrayList 是数组；LinkedLsit是链表</li>
 <li>对于index索引数据：ArrayList 直接定位；LinkedList则需要遍历</li>
 <li>对于随机插入和删除：ArrayList需要移动目标的后面节点；LinkedList则只需要修改前后节点的属性</li>
 <li>对于顺序插入和删除：ArrayList不需要移动节点；比LinkedList效率上高</li>
 </ul>
 <p>总结：需要有大量的插入和删除操作，选择LinkedList；需要很多查找操作，插入和删除操作较少，则选择ArrayList</p>
-<h3 id="ArrayList-、Vector"><a href="#ArrayList-、Vector" class="headerlink" title="ArrayList 、Vector"></a>ArrayList 、Vector</h3><p>Vector在方法上加了synchronized来确保线程安全，其他多差不多</p>
-<h3 id="HashMap的底层数据结构"><a href="#HashMap的底层数据结构" class="headerlink" title="HashMap的底层数据结构"></a>HashMap的底层数据结构</h3><p>在 jdk 1.8 之前都是“数组+链表”，在 jdk 1.8之后都是”数组+链表+红黑树”；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//负载因子</span><br>DEFAULT_LOAD_FACTOR = <span class="hljs-number">0.75f</span><br></code></pre></td></tr></table></figure>
+
+        <h3 id="ArrayList-、Vector">
+          <a href="#ArrayList-、Vector" class="heading-link"><i class="fas fa-link"></i></a><a href="#ArrayList-、Vector" class="headerlink" title="ArrayList 、Vector"></a>ArrayList 、Vector</h3>
+      <p>Vector在方法上加了synchronized来确保线程安全，其他多差不多</p>
+
+        <h3 id="HashMap的底层数据结构">
+          <a href="#HashMap的底层数据结构" class="heading-link"><i class="fas fa-link"></i></a><a href="#HashMap的底层数据结构" class="headerlink" title="HashMap的底层数据结构"></a>HashMap的底层数据结构</h3>
+      <p>在 jdk 1.8 之前都是“数组+链表”，在 jdk 1.8之后都是”数组+链表+红黑树”；</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//负载因子</span></span><br><span class="line">DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span></span><br></pre></td></tr></table></div></figure>
 
 
 
-<h4 id="为什么改成”数组-链表-红黑树”"><a href="#为什么改成”数组-链表-红黑树”" class="headerlink" title="为什么改成”数组+链表+红黑树”"></a>为什么改成”数组+链表+红黑树”</h4><p>主要为了解决hash冲突严重时（链表过长）的查找性能，使用链表的查找性能O(n)，使用红黑树的查找性能时O(log n)</p>
-<h4 id="什么时候用链表，什么时候用红黑树"><a href="#什么时候用链表，什么时候用红黑树" class="headerlink" title="什么时候用链表，什么时候用红黑树"></a>什么时候用链表，什么时候用红黑树</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//阈值</span><br>TREEIFY_THRESHOLD = <span class="hljs-number">8</span>;<br>UNTREEIFY_THRESHOLD = <span class="hljs-number">6</span>;<br><span class="hljs-comment">//时间和空间的权衡</span><br></code></pre></td></tr></table></figure>
+
+        <h4 id="为什么改成”数组-链表-红黑树”">
+          <a href="#为什么改成”数组-链表-红黑树”" class="heading-link"><i class="fas fa-link"></i></a><a href="#为什么改成”数组-链表-红黑树”" class="headerlink" title="为什么改成”数组+链表+红黑树”"></a>为什么改成”数组+链表+红黑树”</h4>
+      <p>主要为了解决hash冲突严重时（链表过长）的查找性能，使用链表的查找性能O(n)，使用红黑树的查找性能时O(log n)</p>
+
+        <h4 id="什么时候用链表，什么时候用红黑树">
+          <a href="#什么时候用链表，什么时候用红黑树" class="heading-link"><i class="fas fa-link"></i></a><a href="#什么时候用链表，什么时候用红黑树" class="headerlink" title="什么时候用链表，什么时候用红黑树"></a>什么时候用链表，什么时候用红黑树</h4>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//阈值</span></span><br><span class="line">TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line">UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line"><span class="comment">//时间和空间的权衡</span></span><br></pre></td></tr></table></div></figure>
 
 
 
-<h4 id="threshold用途"><a href="#threshold用途" class="headerlink" title="threshold用途"></a>threshold用途</h4><p>存放扩容阈值；（容量 * 负载因子）</p>
-<h4 id="HashMap容量"><a href="#HashMap容量" class="headerlink" title="HashMap容量"></a>HashMap容量</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">DEFAULT_INITIAL_CAPACITY = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>; <span class="hljs-comment">// aka 16</span><br><span class="hljs-comment">//最小容量为2的N次方</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="HashMap计算hashCode方法"><a href="#HashMap计算hashCode方法" class="headerlink" title="HashMap计算hashCode方法"></a>HashMap计算hashCode方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">return</span> (key == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);<br><span class="hljs-comment">//^是异或</span><br></code></pre></td></tr></table></figure>
+        <h4 id="threshold用途">
+          <a href="#threshold用途" class="heading-link"><i class="fas fa-link"></i></a><a href="#threshold用途" class="headerlink" title="threshold用途"></a>threshold用途</h4>
+      <p>存放扩容阈值；（容量 * 负载因子）</p>
+
+        <h4 id="HashMap容量">
+          <a href="#HashMap容量" class="heading-link"><i class="fas fa-link"></i></a><a href="#HashMap容量" class="headerlink" title="HashMap容量"></a>HashMap容量</h4>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line"><span class="comment">//最小容量为2的N次方</span></span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="HashMap计算hashCode方法">
+          <a href="#HashMap计算hashCode方法" class="heading-link"><i class="fas fa-link"></i></a><a href="#HashMap计算hashCode方法" class="headerlink" title="HashMap计算hashCode方法"></a>HashMap计算hashCode方法</h4>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line"><span class="comment">//^是异或</span></span><br></pre></td></tr></table></div></figure>
 
 <p>当数组的长度很短时，只有低位数的hashcode值能参与运算。而让高16位参与运算可以更好的均匀散列，减少碰撞，进一步降低hash冲突的几率。并且使得高16位和低16位的信息都被保留了</p>
-<h4 id="jdk-1-8之前为什么会出现死循环"><a href="#jdk-1-8之前为什么会出现死循环" class="headerlink" title="jdk 1.8之前为什么会出现死循环"></a>jdk 1.8之前为什么会出现死循环</h4><p>jdk 1.7 扩容采用的是”头插法”，会导致同一个索引位置的节点在扩容后顺序反掉。jkd 1.8采用的是“尾插法”</p>
-<h3 id="HashMap-和-Hashtable"><a href="#HashMap-和-Hashtable" class="headerlink" title="HashMap 和 Hashtable"></a>HashMap 和 Hashtable</h3><ol>
+
+        <h4 id="jdk-1-8之前为什么会出现死循环">
+          <a href="#jdk-1-8之前为什么会出现死循环" class="heading-link"><i class="fas fa-link"></i></a><a href="#jdk-1-8之前为什么会出现死循环" class="headerlink" title="jdk 1.8之前为什么会出现死循环"></a>jdk 1.8之前为什么会出现死循环</h4>
+      <p>jdk 1.7 扩容采用的是”头插法”，会导致同一个索引位置的节点在扩容后顺序反掉。jkd 1.8采用的是“尾插法”</p>
+
+        <h3 id="HashMap-和-Hashtable">
+          <a href="#HashMap-和-Hashtable" class="heading-link"><i class="fas fa-link"></i></a><a href="#HashMap-和-Hashtable" class="headerlink" title="HashMap 和 Hashtable"></a>HashMap 和 Hashtable</h3>
+      <ol>
 <li>Hashtable是线程安全，它在方法上都加了synchronized来保证线程安全；HashMap不是线程安全</li>
 <li>Hashtable的初始容量是11；HashMap的初始容量为16；</li>
 <li>Hashtable的扩容为2的N倍 + 1；HashMap的容量始终问2 的指数</li>
@@ -274,216 +112,33 @@
 <li>Hashtable的hash值是key.hashCode()算出来的；HashMap的hash是重新计算过的</li>
 <li>HashMap去掉了 Hashtable 中的contains方法</li>
 </ol>
-<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>数据结构：jdk 1.7 采用 分段的数组 + 链表；jdk 1.8 采用 数组 + 链表 + 红黑树</p>
+
+        <h3 id="ConcurrentHashMap">
+          <a href="#ConcurrentHashMap" class="heading-link"><i class="fas fa-link"></i></a><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3>
+      <p>数据结构：jdk 1.7 采用 分段的数组 + 链表；jdk 1.8 采用 数组 + 链表 + 红黑树</p>
 <p>线程安全：jdk 1.7 采用分段锁 ；jdk 1.8 采用synchronized + CAS (比较并交换)</p>
-<h3 id="Comparable-和-Comparator"><a href="#Comparable-和-Comparator" class="headerlink" title="Comparable 和 Comparator"></a>Comparable 和 Comparator</h3><p>Comparable是自然排序接口；Comparator是比较排序器</p>
-<h3 id="Collection-和-Collections"><a href="#Collection-和-Collections" class="headerlink" title="Collection 和 Collections"></a>Collection 和 Collections</h3><p>Collection是集合类的一个顶级接口；</p>
+
+        <h3 id="Comparable-和-Comparator">
+          <a href="#Comparable-和-Comparator" class="heading-link"><i class="fas fa-link"></i></a><a href="#Comparable-和-Comparator" class="headerlink" title="Comparable 和 Comparator"></a>Comparable 和 Comparator</h3>
+      <p>Comparable是自然排序接口；Comparator是比较排序器</p>
+
+        <h3 id="Collection-和-Collections">
+          <a href="#Collection-和-Collections" class="heading-link"><i class="fas fa-link"></i></a><a href="#Collection-和-Collections" class="headerlink" title="Collection 和 Collections"></a>Collection 和 Collections</h3>
+      <p>Collection是集合类的一个顶级接口；</p>
 <p>Collections是集合类的一个工具类/帮助类，提供一系列静态方法</p>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Java%E9%9B%86%E5%90%88/">Java集合</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2021/10/31/ubuntu%E9%85%8D%E7%BD%AE/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ubuntu配置</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/06/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6-GC/">
-                        <span class="hidden-mobile">JVM垃圾回收机制(GC)</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
-    
-
-    
-      <a id="scroll-top-button" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-
-    
-  </main>
-
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://github.com/ioutime" target="_blank" rel="nofollow noopener"><span>GitHub</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
-  
-
-  
-
-  
-</footer>
-
-
-  <!-- SCRIPTS -->
-  
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-<!-- Plugins -->
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
-
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
-<script  src="/js/boot.js" ></script>
-
-
-</body>
-</html>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://ioutime.github.io">ioutime</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://ioutime.github.io/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/">https://ioutime.github.io/2021/06/28/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E9%97%AE%E9%A2%98/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://ioutime.github.io/tags/Java%E9%9B%86%E5%90%88/">Java集合</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/10/31/ubuntu%E9%85%8D%E7%BD%AE/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">ubuntu配置</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/06/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6-GC/"><span class="paginator-prev__text">JVM垃圾回收机制(GC)</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">1.</span> <span class="toc-text">
+          集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#List-%E3%80%81Set%E3%80%81Map"><span class="toc-number">1.1.</span> <span class="toc-text">
+          List 、Set、Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ArrayList-%E3%80%81LinkedList"><span class="toc-number">1.2.</span> <span class="toc-text">
+          ArrayList 、LinkedList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ArrayList-%E3%80%81Vector"><span class="toc-number">1.3.</span> <span class="toc-text">
+          ArrayList 、Vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap%E7%9A%84%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">
+          HashMap的底层数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%B9%E6%88%90%E2%80%9D%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91%E2%80%9D"><span class="toc-number">1.4.1.</span> <span class="toc-text">
+          为什么改成”数组+链表+红黑树”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E9%93%BE%E8%A1%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.4.2.</span> <span class="toc-text">
+          什么时候用链表，什么时候用红黑树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#threshold%E7%94%A8%E9%80%94"><span class="toc-number">1.4.3.</span> <span class="toc-text">
+          threshold用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap%E5%AE%B9%E9%87%8F"><span class="toc-number">1.4.4.</span> <span class="toc-text">
+          HashMap容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap%E8%AE%A1%E7%AE%97hashCode%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.5.</span> <span class="toc-text">
+          HashMap计算hashCode方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jdk-1-8%E4%B9%8B%E5%89%8D%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.4.6.</span> <span class="toc-text">
+          jdk 1.8之前为什么会出现死循环</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap-%E5%92%8C-Hashtable"><span class="toc-number">1.5.</span> <span class="toc-text">
+          HashMap 和 Hashtable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConcurrentHashMap"><span class="toc-number">1.6.</span> <span class="toc-text">
+          ConcurrentHashMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparable-%E5%92%8C-Comparator"><span class="toc-number">1.7.</span> <span class="toc-text">
+          Comparable 和 Comparator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Collection-%E5%92%8C-Collections"><span class="toc-number">1.8.</span> <span class="toc-text">
+          Collection 和 Collections</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="http://pic.yupoo.com/ioutime/cbb93e5d/3080783b.png" alt="avatar"></div><p class="sidebar-ov-author__text">ioutime's blog</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>ioutime</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
