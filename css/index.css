@@ -669,7 +669,7 @@ kbd {
   font-size: 16px;
 }
 .content-wrap {
-  width: calc(100% - 330px);
+  width: calc(100% - 320px);
   float: left;
 }
 .content-wrap--noside {
@@ -1098,7 +1098,7 @@ kbd {
 }
 .sidebar--sticky {
   position: fixed;
-  top: 20px;
+  top: 30px;
   z-index: 0;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
@@ -1170,6 +1170,9 @@ kbd {
 .sidebar-toc ol {
   margin: 0;
   padding-left: 1em;
+}
+.sidebar-ov > div + div {
+  border-top: 1px dashed var(--color-gray-300);
 }
 .sidebar-ov-author {
   width: 100%;
@@ -2816,12 +2819,12 @@ a.fancybox {
   font-size: 0.9em;
   color: #999;
 }
-@media (min-width: 1170px) {
+@media (min-width: 1310px) {
   .header-nav-inner {
-    width: 1170px;
+    width: 1310px;
   }
   .main-inner {
-    width: 1170px;
+    width: 1310px;
   }
 }
 @media (min-width: 991.98px) {
