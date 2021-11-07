@@ -1,0 +1,646 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.6.2"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="InnoDB 行格式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InnoDB Row Formats">
+<meta property="og:url" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/index.html">
+<meta property="og:site_name" content="ioutime&#39;s blog">
+<meta property="og:description" content="InnoDB 行格式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/compact-1.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/note_info.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/compact-analyze.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/compact-analyze-2.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/redundant.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/note_info2.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/off-page.png">
+<meta property="article:published_time" content="2021-11-07T05:22:50.000Z">
+<meta property="article:modified_time" content="2021-11-07T12:02:40.616Z">
+<meta property="article:author" content="ioutime">
+<meta property="article:tag" content="row formats">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/compact-1.png"><title>InnoDB Row Formats | ioutime's blog</title><link ref="canonical" href="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":true},
+  reward: false,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">InnoDB Row Formats</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-11-07</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-07</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.7k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">21分</span></span></div></header><div class="post-body"><p>InnoDB 行格式。 </p>
+<span id="more"></span>
+
+
+        <h2 id="行格式的概念">
+          <a href="#行格式的概念" class="heading-link"><i class="fas fa-link"></i></a><a href="#行格式的概念" class="headerlink" title="行格式的概念 "></a>行格式的概念 </h2>
+      <p><strong>表的行格式</strong>（Row Formats）是指行记录在磁盘上的物理存储方式。行格式会影响查询和 DML 操作的性能，随着单个磁盘页面中容纳更多行，查询（queries）和索引查找（index lookups）可以更快地进行，缓冲池中需要的缓存内存空间会更少，写入更新值所需的 I/O 也更少。 </p>
+<p>每个表中的数据被划分为<strong>页</strong>（pages），每个页中有一个或多个行记录。构成每个表的页面排列在称为 B+ 树索引的数据结构中。表数据（聚集索 引）和二级索引都使用这种类型的结构。</p>
+<blockquote>
+<p>MySQL 提供了很多长度可变的数据类型，比如 <code>VARCHAR(M)、 VARBINARY(M)</code> 以及 <code>TEXT</code> 等。这些变长类型的列被称为变长字 段，其中存储的字节大小是不固定的，因此必须通过记录一些额外信息来处理这些变长字段。</p>
+</blockquote>
+<p><strong>变长字段</strong>是列值存储在 B+ 树索引节点中的规则的一个例外（即变长字段 内容不一定全在 B+ 树叶子结点中）。太长而不适合 B+ 树页面的可变长度列存储在单独分配的磁盘页面上，称为<strong>溢出页</strong>。此类列称为<strong>页外列</strong>。 页外列的值存储在溢出页面的单向链接列表中，每个这样的列都有自己的 一个或多个溢出页面列表。根据列长度，可变长度列值的全部或前缀存储 在 B+ 树中，以避免浪费存储空间和读取单独的页面。</p>
+<p>InnoDB 支持四种行格式，特性各不相同：</p>
+<ul>
+<li>REDUNDANT </li>
+<li>COMPACT </li>
+<li>DYNAMIC </li>
+<li>COMPRESSED</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">行格式</th>
+<th align="center">紧凑的存储特性</th>
+<th align="center">增强的可变长度列存储</th>
+<th align="center">大索引键前缀 支持</th>
+<th align="center">压缩支 持</th>
+<th align="center">支持的表空间类型</th>
+<th align="center">所需文件格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>REDUNDANT</code></td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">system, file-per-table, general</td>
+<td align="center">Antelope or Barracuda</td>
+</tr>
+<tr>
+<td align="center"><code>COMPACT</code></td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">system, file-per-table, general</td>
+<td align="center">Antelope or Barracuda</td>
+</tr>
+<tr>
+<td align="center"><code>DYNAMIC</code></td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">system, file-per-table, general</td>
+<td align="center">Barracuda</td>
+</tr>
+<tr>
+<td align="center"><code>COMPRESSED</code></td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">file-per-table, general</td>
+<td align="center">Barracuda</td>
+</tr>
+</tbody></table></div>
+<p>变量 <code>innodb_default_row_format </code>定义了默认使用的格式（默认为 DYNAMIC），而在建表（CREATE）或修改表（ALTER）时，也可以使用 ROW_FORMAT 选项自定义。</p>
+
+        <h2 id="COMPACT">
+          <a href="#COMPACT" class="heading-link"><i class="fas fa-link"></i></a><a href="#COMPACT" class="headerlink" title="COMPACT"></a>COMPACT</h2>
+      <p>COMPACT 行格式的结构如下图</p>
+<img src="/2021/11/07/InnoDB-Row-Formats/compact-1.png">
+
+<p>其中，<strong>变长字段长度列表</strong>、NULL 值列表和记录头信息属于数据之外的额外信息。 </p>
+
+        <h3 id="变长字段长度列表">
+          <a href="#变长字段长度列表" class="heading-link"><i class="fas fa-link"></i></a><a href="#变长字段长度列表" class="headerlink" title="变长字段长度列表"></a>变长字段长度列表</h3>
+      <p><strong>变长字段长度列表</strong>顾名思义，存储的是变长字段的长度，它按照逆序存储 变长列的字节数。例如行中有三列（均为变长类型），从左到右为 c1、 c2、c3，长度分别为 1 字节、2 字节、4字节，那么变长字段长度列表 中存储的就是 0x040201。 </p>
+<p>当然这里有一个问题，那就是如果变长字段的长度 1 字节存不下怎么办。 InnoDB 按照一定的规则去处理这些情况。 </p>
+<p>对于不同的编码方式，相同字符占用的空间不一定相同，事先约定，某字符集单个字符占用的最大字节数为 MaxLen，例如 UTF-8 编码的 <code>MaxLen </code>就是 3 (<strong>这是mysql特有的，真实的utf-8编码长度为1~4字节</strong>)。对于变长类型来说，它们一般是限制字符数量而不是字节数量，因此，VARCHAR(M) 最多能够存储 M 个字符，即 <code> M * MaxLen</code> 个字节。这里假设实际存储的字符串的字节数为 Length。有了 这三个变量，可以设定以下规则。 </p>
+<ul>
+<li>当 <code>M * MaxLen = 255</code>，使用 <code>1</code> 字节来存储变长字段长度。</li>
+<li>当 <code>M * MaxLen &gt; 255</code>，分情况讨论： <ul>
+<li><code>Length = 127</code>，使用 <code>1</code> 字节来存储变长字段长度。 </li>
+<li><code>Length &gt; 127</code>，使用 <code>2 </code>字节来存储变长字段长度。</li>
+</ul>
+</li>
+</ul>
+
+        <h4 id="特例">
+          <a href="#特例" class="heading-link"><i class="fas fa-link"></i></a><a href="#特例" class="headerlink" title="特例"></a>特例</h4>
+      <ol>
+<li>变长字段长度列表<strong>不存储值为 NULL 的长度信息</strong>，会在 NULL 的标志位存储；</li>
+<li>变长字段长度列表<strong>不一定能存在</strong>,例如<ul>
+<li>表中无变长字段</li>
+<li>变长字段值为 NULL</li>
+</ul>
+</li>
+<li>变长字段长度列表<strong>各字段的长度信息逆序存储</strong></li>
+<li>char类型字段的长度信息是否需要存储在 变长字段的长度列表 中取决于其所使用的<strong>字符集是否为变长字符集</strong><ul>
+<li>MySQL中 <code>char(M)</code> 类型的字段表示该字段最多可以存储 <strong>M 个字符</strong>。</li>
+<li>对于定长字符集(如 ascii 字符集)而言，compact 行格式下存储该字段所占有的空间固定为 <code>M x Maxlen</code> 个字节。</li>
+<li>但是对于变长字符集而言情况就大不一样了，例如 utf8 字符集，其存储 <code>M </code> 个字符所需的空间为 <code>M~3M</code> 个字节。</li>
+<li>在compact行格式下，char类型字段会由于使用变长字符集而导致其所占的<strong>字节数(即长度信息)不定</strong>，故此时 char 类型的数据同样也需要在变长字段的长度列表中存储其长度信息</li>
+</ul>
+</li>
+</ol>
+
+        <h3 id="NULL值列表">
+          <a href="#NULL值列表" class="heading-link"><i class="fas fa-link"></i></a><a href="#NULL值列表" class="headerlink" title="NULL值列表"></a>NULL值列表</h3>
+      <ul>
+<li>二进制位的值为 1 时，代表该列的值为 NULL</li>
+<li>二进制位的值为 0 时，代表该列的值不为 NULL</li>
+<li>MySQL 规定 NULL 值列表必须用整数个字节的位表示</li>
+<li>不一定每列都存在 NULL 值标志</li>
+</ul>
+
+        <h3 id="记录头信息">
+          <a href="#记录头信息" class="heading-link"><i class="fas fa-link"></i></a><a href="#记录头信息" class="headerlink" title="记录头信息"></a>记录头信息</h3>
+      <p><img src="/2021/11/07/InnoDB-Row-Formats/note_info.png" alt="note_info"></p>
+<p>固定为 <code>5</code> 个字节</p>
+<ul>
+<li><strong>预留位1、2</strong>【2 bit】：暂未使用</li>
+<li><strong>delete_mask</strong>【1 bit】：当前记录被删除的标志位</li>
+<li><strong>min_rec_mask</strong>【1 bit】：B+树的每层非叶子节点中的最小记录的标志位</li>
+<li><strong>n_owned</strong>【4 bit】：当前记录拥有的记录数</li>
+<li><strong>heap_no</strong>【13 bit】：当前记录在记录堆中的位置</li>
+<li><strong>record_type</strong>【3 bit】：当前记录类型。具体地，0: 普通记录；1:  B+ 树非叶子节点记录（即所谓的目录项记录）；2: 最小记录；3: 最大记录</li>
+<li><strong>next_record</strong>【16 bit】：下一条记录的相对位置</li>
+</ul>
+
+        <h3 id="记录真实数据">
+          <a href="#记录真实数据" class="heading-link"><i class="fas fa-link"></i></a><a href="#记录真实数据" class="headerlink" title="记录真实数据"></a>记录真实数据</h3>
+      <ol>
+<li>隐藏列【19字节】</li>
+</ol>
+<ul>
+<li><strong>DB_ROW_ID</strong>：该字段占 6 个字节，用于标识一条记录，【不一定存在，只有在用户没有定义主键时，且没有唯一且不为 NULL 的列】</li>
+<li><strong>DB_TRX_ID</strong>：该字段占 6 个字节，其值为事务 ID</li>
+<li><strong>DB_ROLL_PTR</strong>：该字段占 7 个字节，其值为回滚指针</li>
+</ul>
+<ol start="2">
+<li>真实列 1，2，3，4</li>
+</ol>
+
+        <h3 id="实例分析">
+          <a href="#实例分析" class="heading-link"><i class="fas fa-link"></i></a><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3>
+      
+        <h4 id="建表并插入数据">
+          <a href="#建表并插入数据" class="heading-link"><i class="fas fa-link"></i></a><a href="#建表并插入数据" class="headerlink" title="建表并插入数据"></a>建表并插入数据</h4>
+      <figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `demo1`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `demo1`  (</span><br><span class="line">  `test1` <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">  `test2` <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">  `test3` <span class="type">char</span>(<span class="number">10</span>),</span><br><span class="line">  `test4` <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8_general_ci ROW_FORMAT <span class="operator">=</span> COMPACT;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `demo1` <span class="keyword">VALUES</span> (<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>, <span class="string">&#x27;ccc&#x27;</span>, <span class="string">&#x27;dddd&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `demo1` <span class="keyword">VALUES</span> (<span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;ff&#x27;</span>, <span class="keyword">NULL</span>, <span class="string">&#x27;hhhh&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `demo1` <span class="keyword">VALUES</span> (<span class="string">&#x27;e&#x27;</span>, <span class="keyword">NULL</span>, <span class="string">&#x27;ggg&#x27;</span>, <span class="string">&#x27;hhhh&#x27;</span>);</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="找到数据所在位置（-idb-文件）">
+          <a href="#找到数据所在位置（-idb-文件）" class="heading-link"><i class="fas fa-link"></i></a><a href="#找到数据所在位置（-idb-文件）" class="headerlink" title="找到数据所在位置（ idb 文件）"></a>找到数据所在位置（ idb 文件）</h4>
+      <p><img src="/2021/11/07/InnoDB-Row-Formats/compact-analyze.png" alt="compact-analyze"></p>
+
+        <h4 id="分析">
+          <a href="#分析" class="heading-link"><i class="fas fa-link"></i></a><a href="#分析" class="headerlink" title="分析"></a>分析</h4>
+      <p>只分析第一行数据</p>
+<p><strong>红色的部分</strong> 为 变长字段长度列表，04 0A 02 01 转为十进制是 <code>4 10 2 1</code>, 因为是逆序存储, 所以变长字段的长度应该为<code>1 2 10 4</code> 正好对应’a’[varchar], ‘bb’[varchar], ‘ccc’[char(10)], ‘dddd’[varchar]，至于为什么定长 char 类型也存在其中（请看特例的第四点）这里不再解释。</p>
+<p><strong>绿色的部分</strong> 为 NULL 值标志位，<code>00</code> 代表没有空值</p>
+<p><strong>黄色的部分</strong> 为固定 5 字节大小的记录头信息，<code>00 00 10 00 2D</code></p>
+<p><img src="/2021/11/07/InnoDB-Row-Formats/compact-analyze-2.png" alt="compact-analyze"></p>
+
+        <h2 id="REDUNDANT">
+          <a href="#REDUNDANT" class="heading-link"><i class="fas fa-link"></i></a><a href="#REDUNDANT" class="headerlink" title="REDUNDANT"></a>REDUNDANT</h2>
+      <p><code>REDUNDANT</code> 格式是 MySQL 5.0 之前的版本使用的行记录格式，其后版本提供该格式是为了向后兼容（兼容旧版本）。 </p>
+<blockquote>
+<p>REDUNDANT 格式是非常原始的行格式，目前已经很少使用了，其<strong>占用空间最多，内存碎片化最严重，性能较差</strong>。</p>
+</blockquote>
+<p>REDUNDANT 的格式如下图。</p>
+<img src="/2021/11/07/InnoDB-Row-Formats/redundant.png" alt="redundant">
+
+
+
+<blockquote>
+<p><em><strong>Redundant</strong></em> 是 MySQL 5.0 之前的行结构，于 Compact 的主要区别是字段偏移量长度、 NULL 值列表等</p>
+</blockquote>
+
+        <h3 id="字段长度偏移列表">
+          <a href="#字段长度偏移列表" class="heading-link"><i class="fas fa-link"></i></a><a href="#字段长度偏移列表" class="headerlink" title="字段长度偏移列表"></a>字段长度偏移列表</h3>
+      <blockquote>
+<p>包含了所有列（包括隐藏列）的长度信息，它是首先计算各列的长度信息，然后依次累加，最后逆序存储。</p>
+</blockquote>
+<p>字段长度偏移列表中每个偏移量所占字节要么全是1字节或者 2 字节。</p>
+<ul>
+<li>当记录数据内容的整个部分数据（包括隐藏列）所占空间小于 <code>127</code> 字节,则各偏移量只需要 <code>1</code> 个字节</li>
+<li>当其所占空间超过 <code>127</code> 字节但是小于<code>32767</code>字节，则各偏移量需要 <code>2</code> 字节<ul>
+<li>该记录会通过<strong>记录头信息</strong>的 <strong>1byte_offs_flag</strong> 属性来表明该记录各偏移量的字节数，以便读取记录的时候方便解析</li>
+</ul>
+</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>字段长度偏移列表包含 NULL 值标志<ul>
+<li>偏移量的第一位实际上是没有使用的，其用于标识该记录下相应列是否为 NULL 值，如果是 NULL 值，则该位为 1；反之，则为 0</li>
+</ul>
+</li>
+</ul>
+
+        <h3 id="记录头信息-1">
+          <a href="#记录头信息-1" class="heading-link"><i class="fas fa-link"></i></a><a href="#记录头信息-1" class="headerlink" title="记录头信息"></a>记录头信息</h3>
+      <blockquote>
+<p>记录头信息用于描述该条记录，其固定为 6 个字节，即 48 位</p>
+</blockquote>
+<p><img src="/2021/11/07/InnoDB-Row-Formats/note_info2.png" alt="note_info2"></p>
+<ul>
+<li><strong>预留位1、2</strong>：暂未使用</li>
+<li><strong>delete_mask</strong>【1 bit】：当前记录被删除的标志位</li>
+<li><strong>min_rec_mask</strong>【1 bit】：B+ 树的每层非叶子节点中的最小记录的标志位</li>
+<li><strong>n_owned</strong>【4 bit】：当前记录拥有的记录数</li>
+<li><strong>heap_no</strong>【13 bit】：当前记录在记录堆中的位置</li>
+<li><strong>n_field</strong>【10 bit】：表示记录中<strong>列的数量</strong></li>
+<li><strong>1byte_offs_flag</strong>【1 bit】：<strong>标识字段长度偏移列表中各列的偏移量使用的字节数。0：意为每个偏移量均使用 2 个字节表示；1：意为每个偏移量均使用 1 个字节表示</strong></li>
+<li><strong>next_record</strong>【16 bit】：下一条记录的相对位置</li>
+</ul>
+
+        <h2 id="行溢出">
+          <a href="#行溢出" class="heading-link"><i class="fas fa-link"></i></a><a href="#行溢出" class="headerlink" title="行溢出"></a>行溢出</h2>
+      <p>众所周知，InnoDB 存储引擎中内存与硬盘交互的基本单位是页，一般地页大小为<code>16KB</code>。MySQL 规定一个页中至少需要存放两条记录。</p>
+<p>而所谓的<strong>行溢出</strong>是指：当某个记录的某个字段(varchar、text、blob等类型)的值长度过长、数据量过大，会导致一个页中放不下一条记录，为此在compact、redundant行格式中，如果该记录某字段中数据量过多时，则在该记录的数据内容的相应字段处只存储该字段值<strong>前768个字节</strong>的数据和一个指向存储剩余数据的其他页（即所谓的<strong>溢出页</strong>）的<strong>地址</strong>，该地址通常占用<strong>20个字节</strong></p>
+<blockquote>
+<p>通俗的说就是如果数据量过多，数据内容部分只存 <strong>768个前缀字节</strong> 和 <strong>20字节的指针</strong>（指的是 REDUNDANT 和 COMPACT）</p>
+</blockquote>
+
+        <h2 id="COMPRESSED-和-DYNMAMIC-行记录格式">
+          <a href="#COMPRESSED-和-DYNMAMIC-行记录格式" class="heading-link"><i class="fas fa-link"></i></a><a href="#COMPRESSED-和-DYNMAMIC-行记录格式" class="headerlink" title="COMPRESSED 和 DYNMAMIC 行记录格式"></a>COMPRESSED 和 DYNMAMIC 行记录格式</h2>
+      <p>Innodb 1.0 之后引入新的文件格式（file format,可以理解为新的页格式）。</p>
+<blockquote>
+<p>以前支持 COMPACT 和 REDUNDANT 格式称为 <code>Antelop</code> 文件格式，新的文件格式称为<code>Barracuda</code>文件格式（包含了两种新的行记录格式：COMPRESSED 和 DYNAMIC)。</p>
+</blockquote>
+<p>新的两种记录格式对于存放 <code>BLOB </code> 中的数据采用了<strong>完全行溢出</strong>方式(数据页中只存放 <strong>20 字节的指针</strong>，实际数据都存放在 <code>Off Page</code>)</p>
+<p><img src="/2021/11/07/InnoDB-Row-Formats/off-page.png" alt="off-page"></p>
+<p>Compressed行记录格式的另一个功能，存储在其中的数据会以 <code>zlib</code> 的算法进行压缩（对 BLOB、TEXT、VARCHAR 这种特别有用）</p>
+
+        <h3 id="DYNAMIC">
+          <a href="#DYNAMIC" class="heading-link"><i class="fas fa-link"></i></a><a href="#DYNAMIC" class="headerlink" title="DYNAMIC"></a>DYNAMIC</h3>
+      <p><strong>DYNAMIC</strong>行格式提供了与<strong>COMPACT</strong>行格式相同的存储特性，但为变长字段长度列添加了增强的存储功能，并支持大索引键前缀。</p>
+<p>当使用 ROW_FORMAT=<code>DYNAMIC</code>创建表，InnoDB 可以存储<code>fully off-page</code>的变长字段长度列值（用于 VARCHAR、VARBINARY、BLOB 和 TEXT 类型），聚集索引记录只包含指向<strong>溢出页面的20字节指针</strong>。大于或等于<code>768</code>字节的固定长度字段被编码为可变长度字段。例如，如果字符集的最大字节长度大于3，则 char(255） 列可能超过768字节， utf8mb4 就是如此。</p>
+<blockquote>
+<p>列是否在页外存储取决于页面大小和行的总大小。当一行太长时，会选择最长的列进行页外存储，直到聚集索引记录适合 B+ 树页面。小于或等于40字节的 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/blob.html"><code>TEXT</code></a> and <code>BLOB</code> 列存储在行中。</p>
+</blockquote>
+<p><code>DYNAMIC</code>行格式保持了在索引节点中存储整行的效率（<code>COMPACT</code> 和<code>REDUNDANT</code> 格式也是如此），但<code>DYNAMIC</code>行格式避免了用大量长列数据字节填充 B+ 树节点的问题。</p>
+<p><code>DYNAMIC</code>行格式基于这样的思想：如果长数据值的一部分存储在页外，则通常最有效的方法是在<strong>页外存储整个值</strong>。使用 DYNAMIC 格式，较短的列可能保留在 B+ 树节点中，从而最大限度地减少给定行所需的溢出页数。</p>
+<blockquote>
+<p>DYNAMIC 行格式支持最多<code>3072</code>字节的索引键前缀。此功能由<code>innodb_large_prefix</code>变量控制，该变量在默认情况下处于启用状态。</p>
+</blockquote>
+
+        <h3 id="COMPRESSED">
+          <a href="#COMPRESSED" class="heading-link"><i class="fas fa-link"></i></a><a href="#COMPRESSED" class="headerlink" title="COMPRESSED"></a>COMPRESSED</h3>
+      <p><code>COMPRESSED</code>行格式提供了与<code>DYNAMIC</code>行格式相同的存储特性和功能，但增加了对<strong>表和索引数据压缩</strong>的支持</p>
+<p><code>COMPRESSED</code>行格式使用与<code>DYNAMIC</code>行格式类似的页外存储内部详细信息，并从压缩的表和索引数据中考虑额外的存储和性能，使用较小的页面大小。对于压缩行格式，<code>KEY_BLOCK_SIZE</code>选项控制在聚集索引中存储多少列数据，以及在溢出页上存储多少列数据。</p>
+<blockquote>
+<p>COMPRESSED行格式支持最多<code>3072</code>字节的索引键前缀。此功能由<code>innodb_large_prefix</code>变量控制，该变量在默认情况下处于启用状态。</p>
+</blockquote>
+<p>使用<code>COMPRESSED</code>行格式的表可以在每个表的<strong>文件表空间</strong>或<strong>常规表空间</strong>中创建。<strong>系统表空间不支持压缩行格式</strong>。要在每个表空间的文件中存储压缩表，必须启用<code>innodb_file_per_table</code>变量，并且必须将<code>innodb_file_format</code>设置为<code>Barracuda</code>。innodb_file_per_表和innodb_file_格式变量不适用于常规表空间。通用表空间支持所有行格式，但需要注意的是，<strong>由于物理页大小不同，压缩表和未压缩表不能在同一个通用表空间中共存</strong>。</p>
+
+        <h2 id="总结">
+          <a href="#总结" class="heading-link"><i class="fas fa-link"></i></a><a href="#总结" class="headerlink" title="总结"></a>总结</h2>
+      
+        <h3 id="Antelop-文件格式">
+          <a href="#Antelop-文件格式" class="heading-link"><i class="fas fa-link"></i></a><a href="#Antelop-文件格式" class="headerlink" title="Antelop 文件格式"></a>Antelop 文件格式</h3>
+      
+        <h4 id="Redundant">
+          <a href="#Redundant" class="heading-link"><i class="fas fa-link"></i></a><a href="#Redundant" class="headerlink" title="Redundant"></a>Redundant</h4>
+      <ul>
+<li>记录额外信息<ul>
+<li>字段偏移长度列表</li>
+<li>记录头信息</li>
+</ul>
+</li>
+<li>记录真实信息（包含隐藏列）</li>
+</ul>
+<p>这种行格式存储已经<strong>基本不使用</strong>了，占用空间最多，内存碎片化最严重，性能较差</p>
+
+        <h4 id="COMPACT-1">
+          <a href="#COMPACT-1" class="heading-link"><i class="fas fa-link"></i></a><a href="#COMPACT-1" class="headerlink" title="COMPACT"></a>COMPACT</h4>
+      <ul>
+<li><p>记录额外信息</p>
+<ul>
+<li><p>变长字段长度列表</p>
+</li>
+<li><p>NULL 值列表</p>
+</li>
+<li><p>记录头信息</p>
+</li>
+</ul>
+</li>
+<li><p>记录真实数据（包含隐藏列）</p>
+</li>
+</ul>
+
+        <h3 id="Barracuda-文件格式">
+          <a href="#Barracuda-文件格式" class="heading-link"><i class="fas fa-link"></i></a><a href="#Barracuda-文件格式" class="headerlink" title="Barracuda 文件格式"></a>Barracuda 文件格式</h3>
+      <p>加入了 DYNAMIC 和 COMPRESSED 新的行格式存储</p>
+
+        <h4 id="Dynamic-和-Compressed">
+          <a href="#Dynamic-和-Compressed" class="heading-link"><i class="fas fa-link"></i></a><a href="#Dynamic-和-Compressed" class="headerlink" title="Dynamic 和 Compressed"></a>Dynamic 和 Compressed</h4>
+      <ul>
+<li>类似 Compact 行格式，只不过在存储数据发生溢出时的处理方式不一样，Dynamic 是在记录真实数据哪里只存储20字节的页地址，所有字节都存到其他页面中。</li>
+<li>Compressed 行格式会采取压缩算法对页面进行压缩</li>
+</ul>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://ioutime.github.io">ioutime</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/">https://ioutime.github.io/2021/11/07/InnoDB-Row-Formats/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://ioutime.github.io/tags/row-formats/">row formats</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/11/04/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/"><span class="paginator-prev__text">编码格式</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">
+          行格式的概念 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COMPACT"><span class="toc-number">2.</span> <span class="toc-text">
+          COMPACT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%95%BF%E5%AD%97%E6%AE%B5%E9%95%BF%E5%BA%A6%E5%88%97%E8%A1%A8"><span class="toc-number">2.1.</span> <span class="toc-text">
+          变长字段长度列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E4%BE%8B"><span class="toc-number">2.1.1.</span> <span class="toc-text">
+          特例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NULL%E5%80%BC%E5%88%97%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">
+          NULL值列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%A4%B4%E4%BF%A1%E6%81%AF"><span class="toc-number">2.3.</span> <span class="toc-text">
+          记录头信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE"><span class="toc-number">2.4.</span> <span class="toc-text">
+          记录真实数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-number">2.5.</span> <span class="toc-text">
+          实例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E5%B9%B6%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">2.5.1.</span> <span class="toc-text">
+          建表并插入数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E6%95%B0%E6%8D%AE%E6%89%80%E5%9C%A8%E4%BD%8D%E7%BD%AE%EF%BC%88-idb-%E6%96%87%E4%BB%B6%EF%BC%89"><span class="toc-number">2.5.2.</span> <span class="toc-text">
+          找到数据所在位置（ idb 文件）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">2.5.3.</span> <span class="toc-text">
+          分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REDUNDANT"><span class="toc-number">3.</span> <span class="toc-text">
+          REDUNDANT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5%E9%95%BF%E5%BA%A6%E5%81%8F%E7%A7%BB%E5%88%97%E8%A1%A8"><span class="toc-number">3.1.</span> <span class="toc-text">
+          字段长度偏移列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%A4%B4%E4%BF%A1%E6%81%AF-1"><span class="toc-number">3.2.</span> <span class="toc-text">
+          记录头信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E6%BA%A2%E5%87%BA"><span class="toc-number">4.</span> <span class="toc-text">
+          行溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COMPRESSED-%E5%92%8C-DYNMAMIC-%E8%A1%8C%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">
+          COMPRESSED 和 DYNMAMIC 行记录格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DYNAMIC"><span class="toc-number">5.1.</span> <span class="toc-text">
+          DYNAMIC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COMPRESSED"><span class="toc-number">5.2.</span> <span class="toc-text">
+          COMPRESSED</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">
+          总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Antelop-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">
+          Antelop 文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redundant"><span class="toc-number">6.1.1.</span> <span class="toc-text">
+          Redundant</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#COMPACT-1"><span class="toc-number">6.1.2.</span> <span class="toc-text">
+          COMPACT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Barracuda-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.2.</span> <span class="toc-text">
+          Barracuda 文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dynamic-%E5%92%8C-Compressed"><span class="toc-number">6.2.1.</span> <span class="toc-text">
+          Dynamic 和 Compressed</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="http://pic.yupoo.com/ioutime/cbb93e5d/3080783b.png" alt="avatar"></div><p class="sidebar-ov-author__text">生活總是和我們開玩笑</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/ioutime" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">13</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">7</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">13</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__devider"></span><span>ioutime's blog</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script></body></html>
