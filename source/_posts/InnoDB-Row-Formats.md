@@ -109,6 +109,8 @@ COMPACT 行格式的结构如下图
 - **record_type**【3 bit】：当前记录类型。具体地，0: 普通记录；1:  B+ 树非叶子节点记录（即所谓的目录项记录）；2: 最小记录；3: 最大记录
 - **next_record**【16 bit】：下一条记录的相对位置
 
+> next_record 指针指向**记录头信息和真实数据之间的位置**,后面的页格式会用到
+
 ### 记录真实数据
 
 1. 隐藏列【19字节】
@@ -219,7 +221,7 @@ REDUNDANT 的格式如下图。
 
   
 
-COMPRESSED 和 DYNMAMIC 行记录格式
+COMPRESSED 和 DYNAMIC 行记录格式
 ---
 
 Innodb 1.0 之后引入新的文件格式（file format,可以理解为新的页格式）。

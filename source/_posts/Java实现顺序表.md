@@ -6,7 +6,7 @@ categories:
 tags:
 - 线性表
 - 顺序表
-description: Java实现
+hidden: true
 ---
 
 顺序表

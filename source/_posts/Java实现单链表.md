@@ -6,7 +6,7 @@ categories:
 tags:
 - 线性表
 - 单链表
-description: Java实现
+hidden: true
 ---
 
 单链表

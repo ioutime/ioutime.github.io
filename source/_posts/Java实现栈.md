@@ -5,6 +5,7 @@ categories:
 - 数据结构
 tags:
 - 栈
+hidden: true
 ---
 
 栈
