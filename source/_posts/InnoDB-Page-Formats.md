@@ -1,9 +1,9 @@
 ---
 title: InnoDB Page Formats
 categories:
-  - null
+  - Mysql
 tags:
-  - null
+  - page formats
 date: 2021-11-07 20:47:40
 ---
 
