@@ -1,0 +1,590 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.6.2"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="http://pic.yupoo.com/ioutime/01506755/8df53525.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="MyBatis学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis notes">
+<meta property="og:url" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/index.html">
+<meta property="og:site_name" content="ioutime&#39;s blog">
+<meta property="og:description" content="MyBatis学习笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/image-20211110000024816.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/image-20211110000335409.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/image-20211110000646295.png">
+<meta property="og:image" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/image-20211110002140036.png">
+<meta property="article:published_time" content="2021-11-09T07:31:49.000Z">
+<meta property="article:modified_time" content="2021-11-09T16:24:15.055Z">
+<meta property="article:author" content="ioutime">
+<meta property="article:tag" content="MyBatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ioutime.github.io/2021/11/09/Mybatis-notes/image-20211110000024816.png"><title>MyBatis notes | ioutime's blog</title><meta name="robots" content="noindex"><link ref="canonical" href="https://ioutime.github.io/2021/11/09/Mybatis-notes/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"30px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"carbon","highlight":"light","wordWrap":true},
+  reward: false,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">MyBatis notes</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-11-09</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-10</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.2k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">12分</span></span></div></header><div class="post-body"><p>MyBatis学习笔记</p>
+<span id="more"></span>
+
+
+        <h2 id="什么是MyBatis">
+          <a href="#什么是MyBatis" class="heading-link"><i class="fas fa-link"></i></a><a href="#什么是MyBatis" class="headerlink" title="什么是MyBatis"></a>什么是MyBatis</h2>
+      <ul>
+<li>MyBatis 是一款优秀的<strong>持久层</strong>框架，它<strong>支持自定义 SQL、存储过程以及高级映射</strong>。</li>
+<li>MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。</li>
+<li>MyBatis 可以通过<strong>简单的 XML</strong> 或<strong>注解</strong>来配置和<strong>映射原始类型</strong>、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</li>
+</ul>
+<blockquote>
+<p>映射</p>
+</blockquote>
+<blockquote>
+<p>持久化</p>
+</blockquote>
+<p>数据持久化：</p>
+<ul>
+<li>持久化就是将程序的数据在持久状态和瞬间状态转化的过程</li>
+<li>内存：断电即失</li>
+<li>数据库（jdbc），io文件持久化</li>
+</ul>
+<p>因为内存断电即失，有一些对象不能丢失。</p>
+<blockquote>
+<p>持久层</p>
+</blockquote>
+<p>Dao层、Service层、Controller层……</p>
+<ul>
+<li>完成持久化工作的代码块</li>
+<li>层界限明显</li>
+</ul>
+
+        <h2 id="为什么需要MyBatis">
+          <a href="#为什么需要MyBatis" class="heading-link"><i class="fas fa-link"></i></a><a href="#为什么需要MyBatis" class="headerlink" title="为什么需要MyBatis"></a>为什么需要MyBatis</h2>
+      <ul>
+<li>帮助程序员将数据存到数据库中</li>
+<li>方便，传统的JDBC代码太复杂，简化，框架，自动化</li>
+</ul>
+
+        <h2 id="MyBatis-优缺点">
+          <a href="#MyBatis-优缺点" class="heading-link"><i class="fas fa-link"></i></a><a href="#MyBatis-优缺点" class="headerlink" title="MyBatis 优缺点"></a>MyBatis 优缺点</h2>
+      <p>优点：</p>
+<ul>
+<li>基于 SQL 语句的编程，灵活，SQL 写在 XML 里，<strong>解除了 sql 与代码的耦合</strong>，便于统一管理；<strong>提供 XML 标签</strong>，支持编写<strong>动态 SQL语句</strong>，并且可以重用</li>
+<li>MyBatis 基本免除了 jdbc 的代码以及参数配置，结果获取等等</li>
+<li>MyBatis 兼容很多数据库（采用 jdbc 连接）</li>
+<li>提供<strong>映射标签</strong>，支持对象与数据库的 <strong>ORM 字段关系映射</strong>；提供<strong>对象关系映射标</strong>签，支持对象关系组件维护</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>移植性差</li>
+<li>sql 语句的编写工作量大</li>
+</ul>
+<blockquote>
+<p>XML 标签</p>
+</blockquote>
+<blockquote>
+<p>动态 sql 语句</p>
+</blockquote>
+<blockquote>
+<p><strong>对象关系映射</strong>（英语：<strong>Object Relational Mapping</strong>），是一种程序设计技术，用于实现<strong>面向对象编程</strong>语言里<strong>不同类型系统的数据之间的转换</strong></p>
+</blockquote>
+
+        <h2 id="MyBatis-解决了-jdbc-那些问题">
+          <a href="#MyBatis-解决了-jdbc-那些问题" class="heading-link"><i class="fas fa-link"></i></a><a href="#MyBatis-解决了-jdbc-那些问题" class="headerlink" title="MyBatis 解决了 jdbc 那些问题"></a>MyBatis 解决了 jdbc 那些问题</h2>
+      <ul>
+<li><p>数据库链接的<strong>创建、释放</strong>频繁造成资源浪费</p>
+<ul>
+<li>解决：在 <code>SqlMapConfig.xml</code> 中配置数据库链接池，使用<strong>连接池管理数据库连接</strong></li>
+<li>常用数据库连接池：<code>dbcp </code>、<code>c3p0</code> 等等</li>
+</ul>
+</li>
+<li><p>sql 语句写在代码中造成代码不易维护</p>
+<ul>
+<li>解决：将 Sql 语句配置放在 <code>XXXmapper.xml</code> 文件中与Java代码分离</li>
+</ul>
+</li>
+<li><p>sql 语句传参数麻烦</p>
+<ul>
+<li>解决：<strong>MyBatis 自动将 java 对象映射至 sql 语句</strong></li>
+</ul>
+</li>
+<li><p>对结果集解析麻烦</p>
+<ul>
+<li>解决: <strong>MyBatis 自动将 sql 执行结果映射至 Java 对象</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>mybatis 使用的是什么数据库连接池</p>
+</blockquote>
+<blockquote>
+<p>MyBatis 自动将 java 对象映射至 sql 语句</p>
+</blockquote>
+<blockquote>
+<p>MyBatis 自动将 sql 执行结果映射至 Java 对象</p>
+</blockquote>
+
+        <h2 id="MyBatis-编程步骤">
+          <a href="#MyBatis-编程步骤" class="heading-link"><i class="fas fa-link"></i></a><a href="#MyBatis-编程步骤" class="headerlink" title="MyBatis 编程步骤"></a>MyBatis 编程步骤</h2>
+      <ol>
+<li>创建 <code>SqlSessionFactory</code></li>
+<li>通过 SqlSessionFactory 创建 <code>SqlSession</code></li>
+<li>通过 SqlSession 执行数据库操作</li>
+<li>调用 session.<code>commit</code>() 提交事务</li>
+<li>调用 session.<code>close</code>() 关闭会话</li>
+</ol>
+
+        <h2 id="和-的区别">
+          <a href="#和-的区别" class="heading-link"><i class="fas fa-link"></i></a><a href="#和-的区别" class="headerlink" title="#{} 和 ${} 的区别"></a>#{} 和 ${} 的区别</h2>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th></th>
+<th>#{}</th>
+<th>${}</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>是<code>占位符</code>，预编译处理</td>
+<td>是<code>拼接符</code>，字符串替换，没有预编译处理，容易出现 sql 注入</td>
+</tr>
+<tr>
+<td>传入值</td>
+<td>传入的参数是以<strong>字符串</strong>传入，会将 Sql 语句中的 #{} 替换成 ？ 号，调用<code>PerparedStatement</code> 的 <code>set</code> 赋值</td>
+<td>是<strong>原值</strong>传入，相当与 jdbc 的 Statement 编译</td>
+</tr>
+<tr>
+<td>替换之后</td>
+<td>变量自动加上<strong>单引号</strong></td>
+<td>不加单引号</td>
+</tr>
+<tr>
+<td><code>sql</code>注入</td>
+<td>可以防止</td>
+<td>不可以</td>
+</tr>
+<tr>
+<td>DBMS</td>
+<td>变量替换是在 <code>DBMS</code> 中</td>
+<td>在 <code>DNMS</code> 外</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p>DBMS: 数据库管理系统, <code>database management system</code></p>
+</blockquote>
+
+        <h2 id="Dao-接口的工作原理">
+          <a href="#Dao-接口的工作原理" class="heading-link"><i class="fas fa-link"></i></a><a href="#Dao-接口的工作原理" class="headerlink" title="Dao 接口的工作原理"></a>Dao 接口的工作原理</h2>
+      <blockquote>
+<p>Dao 接口即 Mapper 接口。</p>
+</blockquote>
+<ol>
+<li>接口的<strong>全限名</strong>就是映射文件中的 <code>namespace</code> 的值</li>
+<li>接口的<strong>方法</strong>就是映射文件中 Mapper 的 Statement 的 id 值</li>
+<li>接口方法内的<strong>参数</strong>就是<strong>传递给 sql 的参数</strong></li>
+<li>Mapper 接口没有实现类，调用接口方法时，接口全限名+方法名拼接的字符串作为 key 值，可唯一定位一个 MapperStatement</li>
+</ol>
+<p>Dao 接口中的<strong>方法不能重载</strong>，看第四点。</p>
+<p>Dao 接口的工作原理：jdk 的<strong>动态代理</strong></p>
+<ul>
+<li>mybatis 运行时会使用动态代理为 Dao 接口生成代理 proxy 对象</li>
+<li>代理对象 proxy 会<strong>拦截接口方法</strong>，转而执行 <code>MapperStatement</code> 所代表的 sql 语句，然后将 sql 执行结果返回</li>
+</ul>
+<blockquote>
+<p>动态代理</p>
+<p>静态代理</p>
+</blockquote>
+
+        <h2 id="Mapper-中如何传多个参数">
+          <a href="#Mapper-中如何传多个参数" class="heading-link"><i class="fas fa-link"></i></a><a href="#Mapper-中如何传多个参数" class="headerlink" title="Mapper 中如何传多个参数"></a>Mapper 中如何传多个参数</h2>
+      <ol>
+<li>#{0}…#{1}…</li>
+<li>使用 @Param 注解</li>
+<li>封装为 Map ,如 HashMap 的形式传递到 Mapper 中</li>
+</ol>
+
+        <h2 id="MyBatis-动态-sql-语句">
+          <a href="#MyBatis-动态-sql-语句" class="heading-link"><i class="fas fa-link"></i></a><a href="#MyBatis-动态-sql-语句" class="headerlink" title="MyBatis 动态 sql 语句"></a>MyBatis 动态 sql 语句</h2>
+      <p>Mybatis 动态 sql 可以在 xml 映射文件内，以<strong>标签的形式</strong>编写动态 sql 语句；</p>
+<p>执行原理：根据表达式的值完成逻辑判断，并动态拼接 sql 功能</p>
+<p>提供 <code>9</code> 种动态 sql 标签：trim 、 where 、 set、foreach、if、choose、when、otherwise、bind</p>
+
+        <h2 id="Mybatis-实现一对一方式">
+          <a href="#Mybatis-实现一对一方式" class="heading-link"><i class="fas fa-link"></i></a><a href="#Mybatis-实现一对一方式" class="headerlink" title="Mybatis 实现一对一方式"></a>Mybatis 实现一对一方式</h2>
+      <blockquote>
+<p>有联合查询和嵌套查询两种方式。 </p>
+</blockquote>
+<ul>
+<li>联合查询是几个表联合查询，通过在 resultMap 里面配置 <code>association </code>节点配置一对一的类就可以完成;</li>
+<li>嵌套查询是先查一个表，根据这个表里面的结果的外键id，再去另外一个表里面查询数据，也是通过 association配置，但另外一个表的查询是通过select配置的。</li>
+</ul>
+
+        <h2 id="Mybatis实现一对多方式">
+          <a href="#Mybatis实现一对多方式" class="heading-link"><i class="fas fa-link"></i></a><a href="#Mybatis实现一对多方式" class="headerlink" title="Mybatis实现一对多方式"></a>Mybatis实现一对多方式</h2>
+      <blockquote>
+<p>有联合查询和嵌套查询两种方式。</p>
+</blockquote>
+<ul>
+<li>联合查询是几个表联合查询，只查询一次，通过在 resultMap 里面的 <code>collection </code>节点配置一对多的类就可以完成;</li>
+<li>嵌套查询是先查一个表，根据这个表里面的结果的外键id，再去另外一个表里面查询数据，也是通过 <code>collection</code>，但另外一个表的查询是通过 select 配置的。</li>
+</ul>
+
+        <h2 id="Mybatis-一级和二级缓存">
+          <a href="#Mybatis-一级和二级缓存" class="heading-link"><i class="fas fa-link"></i></a><a href="#Mybatis-一级和二级缓存" class="headerlink" title="Mybatis 一级和二级缓存"></a>Mybatis 一级和二级缓存</h2>
+      <ul>
+<li> 一级缓存:基于 <code>PerpetualCache </code>的 <code>HashMap</code> 本地缓存，其存储作用域为 <code>Session</code>，当Session flush 或close之后，该Session中的所有Cache就将清空，<strong>默认打开一级缓存</strong>。</li>
+<li>二级缓存与一级缓存机制相同，默认也是采用PerpetualCache，HashMap存储，不同在于其存储 作用域为 <code>Mapper</code>(namespace)，并且可自定义存储源，如Ehcache。默认打不开二级缓存，要开启二级缓存，使用二级缓存属性类需要<strong>实现 Serializable 序列化接口</strong>(可用来保存对象的状态)，可在它的 映射文件中配置。</li>
+</ul>
+<p>对于缓存数据更新机制，当某一个作用域(一级缓存Session/二级缓存Namespace)进行了增/删/改操 作后，默认该作用域下所有select中的缓存将被clear。</p>
+
+        <h2 id="MyBatis-调用-Mapper-接口有哪些要求">
+          <a href="#MyBatis-调用-Mapper-接口有哪些要求" class="heading-link"><i class="fas fa-link"></i></a><a href="#MyBatis-调用-Mapper-接口有哪些要求" class="headerlink" title="MyBatis 调用 Mapper 接口有哪些要求"></a>MyBatis 调用 Mapper 接口有哪些要求</h2>
+      <ul>
+<li>Mapper接口方法名和mapper.xml中定义的每个sql的id相同;</li>
+<li>Mapper接口方法的输入参数类型和mapper.xml中定义的每个sql的parameterType类型相同; </li>
+<li>Mapper接口方法的输出参数类型和mapper.xml中定义的每个sql的resultType的类型相同; </li>
+<li>Mapper.xml文件中的namespace即是mapper接口的类路径。</li>
+</ul>
+
+        <h2 id="作用域（Scope）和生命周期">
+          <a href="#作用域（Scope）和生命周期" class="heading-link"><i class="fas fa-link"></i></a><a href="#作用域（Scope）和生命周期" class="headerlink" title="作用域（Scope）和生命周期"></a>作用域（Scope）和生命周期</h2>
+      
+        <h3 id="SqlSessionFactoryBuilder">
+          <a href="#SqlSessionFactoryBuilder" class="heading-link"><i class="fas fa-link"></i></a><a href="#SqlSessionFactoryBuilder" class="headerlink" title="SqlSessionFactoryBuilder"></a>SqlSessionFactoryBuilder</h3>
+      <p>这个类可以被实例化、使用和丢弃<strong>，一旦创建了 SqlSessionFactory，就不再需要它了</strong>。 因此 SqlSessionFactoryBuilder 实例的最佳作用域是方法作用域（也就是局部方法变量）。 你可以重用 SqlSessionFactoryBuilder 来创建多个 SqlSessionFactory 实例，但最好还是不要一直保留着它，以保证所有的 XML 解析资源可以被释放给更重要的事情。</p>
+
+        <h3 id="SqlSessionFactory">
+          <a href="#SqlSessionFactory" class="heading-link"><i class="fas fa-link"></i></a><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a>SqlSessionFactory</h3>
+      <p><code>SqlSessionFactory</code> <strong>一旦被创建就应该在应用的运行期间一直存在，没有任何理由丢弃它或重新创建另一个实例</strong>。 使用 SqlSessionFactory 的最佳实践是在应用运行期间不要重复创建多次，多次重建 SqlSessionFactory 被视为一种代码“坏习惯”。因此 SqlSessionFactory 的最佳作用域是应用作用域。 有很多方法可以做到，<strong>最简单的就是使用单例模式或者静态单例模式</strong>。</p>
+
+        <h3 id="SqlSession">
+          <a href="#SqlSession" class="heading-link"><i class="fas fa-link"></i></a><a href="#SqlSession" class="headerlink" title="SqlSession"></a>SqlSession</h3>
+      <p><strong>每个线程都应该有它自己的 SqlSession 实例</strong>。<strong>SqlSession 的实例不是线程安全的，因此是不能被共享的</strong>，所以它的最佳的作用域是请求或方法作用域。 绝对不能将 SqlSession 实例的引用放在一个类的静态域，甚至一个类的实例变量也不行。 也绝不能将 SqlSession 实例的引用放在任何类型的托管作用域中，比如 Servlet 框架中的 HttpSession。 如果你现在正在使用一种 Web 框架，考虑将 SqlSession 放在一个和 HTTP 请求相似的作用域中。 换句话说<strong>，每次收到 HTTP 请求，就可以打开一个 SqlSession，返回一个响应后，就关闭它</strong>。 这个关闭操作很重要，为了确保每次都能执行关闭操作，你应该把这个关闭操作放到 finally 块中</p>
+
+        <h2 id="解决属性名与字段名不一致">
+          <a href="#解决属性名与字段名不一致" class="heading-link"><i class="fas fa-link"></i></a><a href="#解决属性名与字段名不一致" class="headerlink" title="解决属性名与字段名不一致"></a>解决属性名与字段名不一致</h2>
+      <p>问题如下：</p>
+<img src="/2021/11/09/Mybatis-notes/image-20211110000024816.png" alt="image-20211110000024816" style="zoom: 54%;">
+
+<img src="/2021/11/09/Mybatis-notes/image-20211110000335409.png" alt="image-20211110000335409" style="zoom:50%;">
+
+<p>如何解决：</p>
+<ul>
+<li>起别名</li>
+</ul>
+<img src="/2021/11/09/Mybatis-notes/image-20211110000646295.png" alt="image-20211110000646295" style="zoom:67%;">
+
+<ul>
+<li><strong>结果集映射</strong> <code>resultMap</code></li>
+</ul>
+<img src="/2021/11/09/Mybatis-notes/image-20211110002140036.png" alt="image-20211110002140036" style="zoom:72%;">
+
+
+
+<p>mybatis项目联系源码地址：</p>
+<!-- flag of hidden posts --></div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://ioutime.github.io">ioutime</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://ioutime.github.io/2021/11/09/Mybatis-notes/">https://ioutime.github.io/2021/11/09/Mybatis-notes/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://ioutime.github.io/tags/MyBatis/">MyBatis</a></span></div><nav class="post-paginator paginator"></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMyBatis"><span class="toc-number">1.</span> <span class="toc-text">
+          什么是MyBatis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81MyBatis"><span class="toc-number">2.</span> <span class="toc-text">
+          为什么需要MyBatis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">
+          MyBatis 优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-%E8%A7%A3%E5%86%B3%E4%BA%86-jdbc-%E9%82%A3%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">
+          MyBatis 解决了 jdbc 那些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-%E7%BC%96%E7%A8%8B%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.</span> <span class="toc-text">
+          MyBatis 编程步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">6.</span> <span class="toc-text">
+          #{} 和 ${} 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dao-%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">
+          Dao 接口的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mapper-%E4%B8%AD%E5%A6%82%E4%BD%95%E4%BC%A0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-number">8.</span> <span class="toc-text">
+          Mapper 中如何传多个参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-%E5%8A%A8%E6%80%81-sql-%E8%AF%AD%E5%8F%A5"><span class="toc-number">9.</span> <span class="toc-text">
+          MyBatis 动态 sql 语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis-%E5%AE%9E%E7%8E%B0%E4%B8%80%E5%AF%B9%E4%B8%80%E6%96%B9%E5%BC%8F"><span class="toc-number">10.</span> <span class="toc-text">
+          Mybatis 实现一对一方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis%E5%AE%9E%E7%8E%B0%E4%B8%80%E5%AF%B9%E5%A4%9A%E6%96%B9%E5%BC%8F"><span class="toc-number">11.</span> <span class="toc-text">
+          Mybatis实现一对多方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis-%E4%B8%80%E7%BA%A7%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-number">12.</span> <span class="toc-text">
+          Mybatis 一级和二级缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-%E8%B0%83%E7%94%A8-Mapper-%E6%8E%A5%E5%8F%A3%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A6%81%E6%B1%82"><span class="toc-number">13.</span> <span class="toc-text">
+          MyBatis 调用 Mapper 接口有哪些要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%EF%BC%88Scope%EF%BC%89%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">14.</span> <span class="toc-text">
+          作用域（Scope）和生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SqlSessionFactoryBuilder"><span class="toc-number">14.1.</span> <span class="toc-text">
+          SqlSessionFactoryBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SqlSessionFactory"><span class="toc-number">14.2.</span> <span class="toc-text">
+          SqlSessionFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SqlSession"><span class="toc-number">14.3.</span> <span class="toc-text">
+          SqlSession</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8E%E5%AD%97%E6%AE%B5%E5%90%8D%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">15.</span> <span class="toc-text">
+          解决属性名与字段名不一致</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="http://pic.yupoo.com/ioutime/cbb93e5d/3080783b.png" alt="avatar"></div><p class="sidebar-ov-author__text">生活总是和我们开玩笑</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/ioutime" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">8</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">18</div><div class="sidebar-ov-state-item__name">标签</div></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__devider"></span><span>ioutime's blog</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script></body></html>
