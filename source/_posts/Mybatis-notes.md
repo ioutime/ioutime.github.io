@@ -87,7 +87,7 @@ MyBatis 解决了 jdbc 那些问题
 
 
 
-> mybatis 使用的是什么数据库连接池
+> mybatis 使用的是数据库连接池 : 参数 `POOLED`
 
 > MyBatis 自动将 java 对象映射至 sql 语句
 
@@ -142,9 +142,7 @@ Dao 接口的工作原理：jdk 的**动态代理**
 
 
 
-> 动态代理
->
-> 静态代理
+> [动态代理和静态代理](#动态代理和静态代理)
 
 
 
@@ -242,4 +240,119 @@ MyBatis 调用 Mapper 接口有哪些要求
 
 
 
-mybatis项目联系源码地址：
+
+
+动态代理和静态代理
+---
+
+### 代理模式介绍
+
+代理模式是一种**设计模式**，提供了对**目标对象额外的访问方式**，即通过代理对象访问目标对象，这样可以在不修改原目标对象的前提下，**提供额外的功能操作**，**扩展目标对象的功能**。
+
+> 总的来说，代理相当于设置了一个 '中介' 来控制和访问对象，这样可以**简化访问和方便扩展**
+
+### 静态代理
+
+> 需要代理对象和目标对象实现一样的接口
+
+优点：可以在**不修改目标对象**的前提下**扩展目标对象**的功能。
+
+缺点：
+
+1. **冗余**。由于代理对象要实现与目标对象一致的接口，会产生过多的代理类。
+2. **不易维护**。一旦接口增加方法，目标对象与代理对象都要进行修改。
+
+
+
+举例：你要买车，找了一个中介帮你买车，用静态代理
+
+```java
+package com.ioutime.java.proxy;
+
+/**
+ * @author ioutime
+ * @version 1.0
+ * @date 2021/11/12 13:52
+ */
+
+public class StaticProxy {
+    public static void main(String[] args) {
+        MyBuyCar myBuyCar = new MyBuyCar();
+        ProxyBuy proxyBuy = new ProxyBuy(myBuyCar);
+        proxyBuy.buy();
+    }
+}
+
+/**
+ * 接口
+ */
+interface  Car{
+    void buy();
+}
+
+/**
+ * 真实对象
+ */
+class MyBuyCar implements Car{
+
+    @Override
+    public void buy() {
+        System.out.println("你：看车");
+    }
+
+    public void pay(){
+        System.out.println("你：付钱");
+    }
+}
+
+/**
+ * 代理对象
+ */
+class ProxyBuy implements Car{
+
+    private MyBuyCar myBuyCar;
+
+    @Override
+    public void buy() {
+        //扩展功能
+        System.out.println("中介：帮你找车");
+        myBuyCar.buy();
+        myBuyCar.pay();
+        //扩展功能
+        System.out.println("中介：收取费用");
+    }
+
+    public ProxyBuy(MyBuyCar car) {
+       this.myBuyCar = car;
+    }
+}
+```
+
+
+
+### 动态代理
+
+动态代理利用了 `JDK API` ，动态地在**内存中构建代理对象**，从而实现对目标对象的代理功能。动态代理又被称为**JDK代理**或**接口代理**。
+
+静态代理与动态代理的**区别**主要在：
+
+- 静态代理在**编译时**就已经实现，编译完成后代理类是一个实际的class文件
+- 动态代理是在**运行时动态生成**的，即编译完成后没有实际的class文件，而是在**运行时动态生成类字节码，并加载到JVM中**
+
+**特点：**
+动态代理对象**不需要实现接口**，但是要求**目标对象必须实现接口**，否则不能使用动态代理
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
