@@ -917,7 +917,7 @@ kbd {
   z-index: 0;
   width: 100%;
   height: 100%;
-  background: url("http://pic.yupoo.com/ioutime/1ed2c088/d3d80649.jpeg") no-repeat center/cover;
+  background: url("http://ioutime.test.upcdn.net/blog/1117304.png") no-repeat center/cover;
 }
 .header-banner::before {
   content: '';
