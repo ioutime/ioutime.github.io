@@ -3,7 +3,7 @@ title: leetcode notes
 categories:
   - leetcode
 tags:
-  - null
+  - leetcode
 hidden: true
 date: 2021-11-12 14:59:40
 ---

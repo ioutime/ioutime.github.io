@@ -6,7 +6,7 @@ categories:
 tags:
 - Java
 description: Java学习笔记
-sticky: 100
+sticky: 10
 ---
 
 Java学习笔记

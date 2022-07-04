@@ -1,0 +1,44 @@
+---
+title: Git-命令
+categories:
+  - git
+tags:
+  - git
+hidden: false
+date: 2022-04-17 15:10:57
+---
+
+ git 常用命令
+
+<!-- more -->
+
+基本命令
+---
+
+- `git init` 初始化
+- `git add` 把文件添加到仓库中
+- `git commit` 把文件提交到仓库中
+  - `-m` 添加本次体提交说明
+
+- `git status` 查看当前仓库状态
+
+- `git diff` 查看文件修改内容
+- `git log` 查看提交日志
+- `git reset --hard commit_id` 版本回退
+- `git reflog` 查看历史命令
+- `git remote add origin ` 添加远程仓库
+
+### git pull 强制远程拉取并覆盖本地
+
+```shell
+git fetch --all
+git reset --hard origin/master
+git pull
+```
+
+### git push 强制推送
+
+```git
+git push -f origin master
+```
+

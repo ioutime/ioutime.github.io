@@ -3,7 +3,7 @@ title: MyBatis notes
 categories:
   - Java
 tags:
-  - MyBatis
+  - frame
 hidden: true
 date: 2021-11-09 15:31:49
 ---
