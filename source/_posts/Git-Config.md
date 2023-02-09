@@ -1,15 +1,14 @@
 ---
-title: Git-配置
+title: Git 安装与配置
 categories:
   - git
 tags:
   - git
-hidden: true
-date: 2023-02-07 15:10:57
-
+hidden: false
+date: 2023-02-08 19:08:27
 ---
 
- windows 上 git 配置
+git 安装与配置
 
 <!-- more -->
 
@@ -33,6 +32,5 @@ mkdir ~/.ssh
 cd ~/.ssh
 #生成 一直默认
 ssh-keygen -t rsa -C "邮箱"
-#复制~/.ssh/ 路径下的id_rsa.pub文件中的全部内容（去github、gitree）
+#复制~/.ssh/ 路径下的id_rsa.pub文件中的全部内容（去github、gitee）
 ```
-
