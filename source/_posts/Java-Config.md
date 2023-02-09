@@ -16,7 +16,7 @@ Java 环境配置，以 jdk 1.8 为例。
 
 > 注：使用 zip 安装的，jdk exe转换为zip(https://bgasparotto.com/convert-jdk-exe-zip)
 
-#### 配置环境变量
+#### JDK
 
 ##### 1、新建系统变量
 
@@ -37,3 +37,6 @@ java -version
 javac -version
 ```
 
+
+
+#### Maven
